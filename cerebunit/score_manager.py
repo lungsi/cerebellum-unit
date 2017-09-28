@@ -61,7 +61,7 @@ class BinaryScore(sciunit.Score):
         return self.score
 
     def __str__(self):
-        return "BinaryScore is " % self.score
+        return "BinaryScore is " + str(self.score)
 # ============================================================================
 #
 # ==========================Score=============================================
