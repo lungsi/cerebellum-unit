@@ -1,0 +1,7 @@
+# purkinjecell/
+from .spontaneous_firing_test import SpontaneousFiringTest
+from .no_channels_AIS_test import NoChannelsAISTest
+from .positive_0pt1_to_1pt5_nA_test import PositiveStepCurrentTest
+from .negative_0pt1_to_1_nA_test import NegativeStepCurrentTest
+from .ca_spikes_na_bursts_test import CaSpikesNaBurstsTest
+from .knockout_Cav2pt1_test import KOCav2pt1Test
