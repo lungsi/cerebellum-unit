@@ -20,8 +20,8 @@ class BinaryScore(sciunit.Score):
     0 if the prediction is not in the interval of the measurement within a margin of error (epsilon).
     '''
 
-    def __init__(self):
-        pass
+    #def __init__(self):
+    #    pass
 
     @classmethod
     def compute(self, prediction, measurement, epsilon=10**(-3)):
