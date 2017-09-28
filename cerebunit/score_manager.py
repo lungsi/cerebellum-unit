@@ -33,7 +33,7 @@ class BinaryScore(sciunit.Score):
                 else:
                     amount = measurement[key]
             # Then
-            if amount-epsilon <= prediction <= amount+espilon:
+            if amount-epsilon <= prediction <= amount+epsilon:
                 self.score = 1
             else:
                 self.score = 0
