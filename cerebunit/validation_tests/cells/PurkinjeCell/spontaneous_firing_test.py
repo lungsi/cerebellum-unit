@@ -62,7 +62,7 @@ class SpontaneousFiringTest(sciunit.Test, BinaryScore):
         '''
         pass
 
-    def compute_score(self, observation):
+    def compute_score(self, observation, model, verbose=False):
         '''
         fdfd
         '''
