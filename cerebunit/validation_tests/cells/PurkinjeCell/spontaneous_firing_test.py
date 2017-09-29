@@ -70,7 +70,7 @@ class SpontaneousFiringTest(sciunit.Test, BinaryScore):
                                  observation )
         score = BinaryScore(x)
         print score
-        score.description = "The spontaneous firing test defined by the mean firing rate of the model = " + a_prediction + " compared against the observed experimental data " + str(observation) + " has the BinaryScore = " + str(score)
+        score.description = "The spontaneous firing test defined by the mean firing rate of the model = " + str(a_prediction) + " compared against the observed experimental data " + str(observation) + " has the BinaryScore = " + str(score)
         return score
         #computed_scores = {}
         #for cell_region in model.cell_regions:
