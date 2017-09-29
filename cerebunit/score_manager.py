@@ -24,7 +24,7 @@ class BinaryScore(sciunit.Score):
     #    pass
 
     @classmethod
-    def compute(self, prediction=None, measurement=None, epsilon=10**(-3)):
+    def compute(self, measurement, prediction, epsilon=10**(-3)):
         # mesurement is in dictionary form whose value has
         # magnitude and python quantity
         # default epsilon = 10**(-3)
