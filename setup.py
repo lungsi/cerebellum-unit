@@ -11,8 +11,10 @@ setup(
         packages=["cerebunit",
                   #"cerebunit.file_manager",
                   #"cerebunit.test_manager",
+                  # capabilities 
                   "cerebunit.capabilities",
                   "cerebunit.capabilities.cells",
+                  # validation_tests
                   "cerebunit.validation_tests",
                   "cerebunit.validation_tests.cells",
                   "cerebunit.validation_tests.cells.PurkinjeCell",
