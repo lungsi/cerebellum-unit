@@ -2,7 +2,7 @@
 # spontaneous_firing_test.py
 #
 # created  14 August 2017 Lungsi
-# modified 31 August 2017 Lungsi
+# modified 29 September 2017 Lungsi
 #
 # ============================================================================
 
@@ -11,6 +11,7 @@ import os
 import sciunit
 import quantities as pq
 from elephant.statistics import mean_firing_rate as mfr
+
 from cerebunit.file_manager import get_folder_path_and_name as gfpan
 from cerebunit.score_manager import BinaryScore
 from cerebunit.capabilities.cells.response import ProducesSpikeTrain
@@ -22,21 +23,19 @@ class SpontaneousFiringTest(sciunit.Test, BinaryScore):
     '''
     required_capabilities = (ProducesSpikeTrain,)
     score_type = BinaryScore
-
-    #def __init__(self):
-    #    path_to_folder, folder_name = gfpan()
-    #    # as inherited from sciunit by default name is the class name
-    #    self.name = "Spontaneous Firing Test for " + folder_name
-    #    self.description = "This tests the spontaneous firing test observed in real adult " + folder_name + ". This is done by comparing the mean spike frequency of the model against experimentally observed levels."
-    #    # also inherited from sciunit but assuming observation is in json
-    #    self.observation = {"mean":None, "error":None}
-
+    #
+    # ================================Use Case==============================
+    # from cerebunit.validation_tests.cells.PurkinjeCell \
+    #        import SpontaneousFiringTest as sft
+    # test = sft(some_data)
+    # s = test.judge(some_model, deep_error=True)
+    # ======================================================================
     def generate_prediction(self, model, verbose=False):
         '''
         fdf
         '''
         setup_parameters = { "dt": 0.025,   "celsius": 37,
-                             "tstop": 100, "v_init": -65 }
+                             "tstop": 1000, "v_init": -65 }
         model.set_simulation_properties(setup_parameters)
         model.produce_spike_train()
         #self.process_prediction(model)
@@ -54,7 +53,6 @@ class SpontaneousFiringTest(sciunit.Test, BinaryScore):
         #
         #self.processed_prediction = model_mean_firing_rates
         return model_mean_firing_rates
-        #self.prediction = self.processed_prediction["vm_soma"][1]
 
 
     def validate_observation(self, observation, first_try=True):
@@ -73,7 +71,7 @@ class SpontaneousFiringTest(sciunit.Test, BinaryScore):
         x = BinaryScore.compute( observation,
                                  a_prediction  )
         score = BinaryScore(x)
-        score.description = "The spontaneous firing test defined by the mean firing rate of the model = " + str(a_prediction) + " compared against the observed experimental data " + str(observation) + " has the BinaryScore = " + str(score)
+        score.description = "The spontaneous firing test defined by the mean firing rate of the model = " + str(a_prediction) + " compared against the observed experimental data " + str(observation) + " whose " + str(score)
         return score
         #computed_scores = {}
         #for cell_region in model.cell_regions:
