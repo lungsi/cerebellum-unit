@@ -6,7 +6,7 @@
 #
 # ============================================================================
 
-import sciuniti
+import sciunit
 import quantities as pq
 from elephant.statistics import mean_firing_rate as mfr
 
