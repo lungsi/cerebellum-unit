@@ -1,5 +1,5 @@
 # ============================================================================
-# spontaneous_firing_test.py
+# test_for_spontaneous_firing.py
 #
 # created  14 August 2017 Lungsi
 # modified 29 September 2017 Lungsi
