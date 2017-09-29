@@ -66,8 +66,8 @@ class SpontaneousFiringTest(sciunit.Test, BinaryScore):
         fdfd
         '''
         a_prediction = self.processed_prediction["vm_soma"][1]
-        x = BinaryScore.compute( measurement,
-                                 prediction  )
+        x = BinaryScore.compute( observation,
+                                 a_prediction  )
         score = BinaryScore(x)
         score.description = "The spontaneous firing test defined by the mean firing rate of the model = " + str(a_prediction) + " compared against the observed experimental data " + str(observation) + " has the BinaryScore = " + str(score)
         return score
