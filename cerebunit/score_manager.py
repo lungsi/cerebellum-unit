@@ -28,6 +28,8 @@ class BinaryScore(sciunit.Score):
         # mesurement is in dictionary form whose value has
         # magnitude and python quantity
         # default epsilon = 10**(-3)
+        print prediction
+        print measurement
         if len(measurement.keys()) > 1:
             for key in measurement:
                 if key=="error":
