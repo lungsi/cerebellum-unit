@@ -2,7 +2,6 @@
 # score_manager.py
 #
 # created 21 September 2017 Lungsi
-# modified
 #
 # This py-file contains custum score functions initiated by
 #
@@ -13,7 +12,9 @@ import sciunit
 
 
 # ==========================BinaryScore=======================================
-# created 21 September 2017 Lungsi
+# created  21 September 2017 Lungsi
+# modified 29 September 2017 Lungsi
+#
 class BinaryScore(sciunit.Score):
     '''
     A Binary Score.
