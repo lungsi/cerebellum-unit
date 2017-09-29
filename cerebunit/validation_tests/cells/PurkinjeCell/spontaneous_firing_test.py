@@ -53,6 +53,7 @@ class SpontaneousFiringTest(sciunit.Test, BinaryScore):
             model_mean_firing_rates.update(a_firing_rate)
         #
         self.processed_prediction = model_mean_firing_rates
+        #self.prediction = self.processed_prediction["vm_soma"][1]
 
 
     def validate_observation(self, observation, first_try=True):
@@ -61,7 +62,7 @@ class SpontaneousFiringTest(sciunit.Test, BinaryScore):
         '''
         pass
 
-    def compute_score(self, model, observation, verbose=False):
+    def compute_score(self, observation, model, verbose=False):
         '''
         fdfd
         '''
