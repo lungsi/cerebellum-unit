@@ -39,7 +39,7 @@ class SpontaneousFiringTest(sciunit.Test, BinaryScore):
                              "tstop": 100, "v_init": -65 }
         model.set_simulation_properties(setup_parameters)
         model.produce_spike_train()
-        self.process_prediction(model)
+        #self.process_prediction(model)
         return model
 
     def process_prediction(self, model):
@@ -52,7 +52,8 @@ class SpontaneousFiringTest(sciunit.Test, BinaryScore):
             a_firing_rate = {cell_region: [x, x.rescale(pq.Hz)]}
             model_mean_firing_rates.update(a_firing_rate)
         #
-        self.processed_prediction = model_mean_firing_rates
+        #self.processed_prediction = model_mean_firing_rates
+        return model_mean_firing_rates
         #self.prediction = self.processed_prediction["vm_soma"][1]
 
 
@@ -62,11 +63,13 @@ class SpontaneousFiringTest(sciunit.Test, BinaryScore):
         '''
         pass
 
-    def compute_score(self, observation, verbose=False):
+    def compute_score(self, observation, model, verbose=False):
         '''
         fdfd
         '''
-        a_prediction = self.processed_prediction["vm_soma"][1]
+        processed_prediction = self.process_prediction(model)
+        a_prediction = processed_prediction["vm_soma"][1]
+        #a_prediction = self.processed_prediction["vm_soma"][1]
         x = BinaryScore.compute( observation,
                                  a_prediction  )
         score = BinaryScore(x)
