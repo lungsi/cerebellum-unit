@@ -1,22 +1,26 @@
 # ============================================================================
-# no_channels_AIS_test.py
+# test_for_firing_without_AIS_channels.py
 #
 # created  01 September 2017 Lungsi
-# modified 2017 Lungsi
+# modified 29 September 2017 Lungsi
 #
 # ============================================================================
 
-import sciunit
+import sciuniti
+import quantities as pq
+from elephant.statistics import mean_firing_rate as mfr
+
 from cerebunit.capabilities.cells.response import ProducesSpikeTrain
-#from cerebunit.statistical_tests.interval import NameHereScore
+from cerebunit.capabilities.cells.knockout import CanKOAISChannels
+from cerebunit.score_manager import BinaryScore
 
 
-class NoChannelsAISTest(sciunit.Test, sciunit.Score):
+class NoChannelsAISTest(sciunit.Test, BinaryScore):
     '''
-    ff
+    The No Channels AIS Test is a test for whether firing occurs (from the soma) without the channels. There is no current injection for this test.
     '''
-    required_capabilities = (ProducesSpikeTrain,)
-    score_type = sciunit.Score
+    required_capabilities = (CanKOAISChannels,ProducesSpikeTrain,)
+    score_type = BinaryScore
 
     def generate_prediction(self, model, verbose=False):
         '''
@@ -24,14 +28,18 @@ class NoChannelsAISTest(sciunit.Test, sciunit.Score):
         '''
         setup_parameters = { "dt": 0.025,   "celsius": 37,
                              "tstop": 1000, "v_init": -65 }
+        model.ko_AIS_channels()
         model.set_simulation_properties(setup_parameters)
-        # ===================Turn-off AIS channels====================
-        setattr(model, "cell.axonAIS.pcabar_Cav3_1", 0)
-        setattr(model, "cell.axonAIS.gbar_Nav1_6", 1)
-        setattr(model, "cell.axonAIS.pcabar_Cav2_1", 0)
-        # ============================================================
         model.produce_spike_train()
         return model
+
+    def process_prediction(self, model):
+        '''
+        afdd
+        '''
+        cell_region = "vm_soma"
+        return mfr(model.predictions["spike_train"][cell_region])
+
 
     def validate_observation(self, observation, first_try=True):
         '''
@@ -39,8 +47,13 @@ class NoChannelsAISTest(sciunit.Test, sciunit.Score):
         '''
         pass
 
-    def compute_score(self, model, verbose=False):
+    def compute_score(self, observation, model, verbose=False):
         '''
         fdfd
         '''
-        pass
+        processed_prediction = self.process_prediction(model)
+        a_prediction = processed_prediction.item() # just the magnitude
+        x = BinaryScore.compute( observation, a_prediction )
+        score = BinaryScore(x)
+        score.description = "The No Channels in AIS Firing test results in the prediction by the model to be " + str(processed_prediction) + " which means that the " + str(score)
+        return score
