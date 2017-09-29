@@ -19,17 +19,17 @@ class BinaryScore(sciunit.Score):
     A Binary Score.
     0 if the prediction is not in the interval of the measurement within a margin of error (epsilon).
     '''
-
-    #def __init__(self):
-    #    pass
-
+    #
+    # -----------------------------Use Case-----------------------------------
+    # x = BinaryScore.compute( measurement, prediction )
+    # score = BinaryScore(x)
+    # ------------------------------------------------------------------------
+    #
     @classmethod
     def compute(self, measurement, prediction, epsilon=10**(-3)):
         # mesurement is in dictionary form whose value has
         # magnitude and python quantity
         # default epsilon = 10**(-3)
-        print prediction
-        print measurement
         if len(measurement.keys()) > 1:
             for key in measurement:
                 if key=="error":
