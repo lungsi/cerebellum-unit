@@ -32,10 +32,18 @@ class SpontaneousFiringTest(sciunit.Test, BinaryScore):
     # ======================================================================
     def generate_prediction(self, model, verbose=False):
         '''
-        fdf
+        Generates spike train from various cell regions.
+        Default cell_regions = {"vm_soma": 0.0, "vm_NOR3": 0.0}
+        The value of each key is the threshold defined for
+        spiking.
+        The function is automatically called by sciunit.Test
+        which this test is a child of.
+        Therefore as part of sciunit generate_prediction is
+        mandatory.
         '''
         setup_parameters = { "dt": 0.025,   "celsius": 37,
                              "tstop": 1000, "v_init": -65 }
+        model.cell_regions = {"vm_soma": 0.0}
         model.set_simulation_properties(setup_parameters)
         model.produce_spike_train()
         #self.process_prediction(model)
@@ -43,7 +51,10 @@ class SpontaneousFiringTest(sciunit.Test, BinaryScore):
 
     def process_prediction(self, model):
         '''
-        afd
+        Once the model has run, this function can be used to
+        process the spike_train prediction to get the
+        prediction of interest, mean firing rate.
+        Prediction of interest implies all the listed cell_regions
         '''
         model_mean_firing_rates = {}
         for cell_region in model.cell_regions:
@@ -57,13 +68,25 @@ class SpontaneousFiringTest(sciunit.Test, BinaryScore):
 
     def validate_observation(self, observation, first_try=True):
         '''
-        fdfd
+        This function is called automatically by sciunit.
+        This checks if the experimental_data is of some desired
+        form or magnitude.
+        Not exactly this function but a version of this is already
+        performed by the ValidationTestLibrary.get_validation_test
         '''
         pass
 
     def compute_score(self, observation, model, verbose=False):
         '''
-        fdfd
+        This function like generate_pediction is called automatically
+        by sciunit which SpontaneousFiringTest is a child of.
+        This function must be named compute_score
+        This function calls the function process_prediction to return
+        the mean firing reate of spike trains from all the cell_regions
+        Off al the cell_regions our region of interest is "vm_soma".
+        The prediction processed from "vm_soma" is then compared against
+        the experimental_data to get the binary score; 0 if the
+        prediction correspond with experiment, else 1.
         '''
         processed_prediction = self.process_prediction(model)
         a_prediction = processed_prediction["vm_soma"][1]
