@@ -1,7 +1,7 @@
 # purkinjecell/
 from .test_for_spontaneous_firing import SpontaneousFiringTest
 from .test_for_firing_without_AIS_channels import NoChannelsAISTest
-from .test_for_firing_withou_Dendrites import NoDendritesTest
+from .test_for_firing_without_Dendrites import NoDendritesTest
 from .positive_0pt1_to_1pt5_nA_test import PositiveStepCurrentTest
 from .negative_0pt1_to_1_nA_test import NegativeStepCurrentTest
 from .ca_spikes_na_bursts_test import CaSpikesNaBurstsTest
