@@ -27,7 +27,7 @@ import quantities as pq
 from elephant.statistics import mean_firing_rate as mfr
 
 from cerebunit.capabilities.cells.response import ProducesSpikeTrain
-from cerebunit.capabilities.cells.knockout import CanDisconnectDendrites
+from cerebunit.capabilities.cells.morphology import CanDisconnectDendrites
 from cerebunit.score_manager import BinaryScore
 
 
