@@ -34,11 +34,16 @@ class BinaryScore(sciunit.Score):
         if len(measurement.keys()) > 1:
             for key in measurement:
                 if key=="error":
-                    epsilon = measurement[key]
+                    epsilon_left = measurement[key]
+                    epsilon_right = epsilon_left
+                elif key=="error_left":
+                    epsilon_left = measurement[key]
+                elif key=="error_right":
+                    epsilon_right = measurement[key]
                 else:
                     amount = measurement[key]
             # Then
-            if amount-epsilon <= prediction <= amount+epsilon:
+            if amount-epsilon_left <= prediction <= amount+epsilon_right:
                 self.score = 1
             else:
                 self.score = 0
