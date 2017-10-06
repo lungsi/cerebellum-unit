@@ -129,7 +129,7 @@ class QuasiLinearTest(sciunit.Test, BinaryScore):
         ramp_mean_spike_freq = {}
         for current_id, spike_array in ramp_spike_train.iteritems():
             x = mfr(spike_array)
-            y = {current_id: {"mean_freq": x.rescale(pq.Hz)} }
+            y = {current_id: {"mean_freq": x.rescale(pq.Hz).item()} } # just the magnitude
             ramp_mean_spike_freq.update(y)
         return ramp_mean_spike_freq
 
