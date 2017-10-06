@@ -27,7 +27,8 @@ class QuasiLinearTest(sciunit.Test, BinaryScore):
         '''
         # ============Ramp Up and then Down Step Currents (nA)==============
         self.ramp_up_down_currents = \
-                { "current1": {"amp": 0.2, "dur": 1000.0, "delay": 1000.0},
+                { "current1": {"amp": 0.2, "dur": 100.0, "delay": 100.0},
+                  #"current1": {"amp": 0.2, "dur": 1000.0, "delay": 1000.0},
                   #"current2": {"amp": 0.4, "dur": 1000.0, "delay": 2000.0},
                   #"current3": {"amp": 0.6, "dur": 1000.0, "delay": 3000.0},
                   #"current4": {"amp": 0.8, "dur": 1000.0, "delay": 4000.0},
@@ -41,12 +42,14 @@ class QuasiLinearTest(sciunit.Test, BinaryScore):
                   #"current12": {"amp": 0.8, "dur": 1000.0, "delay": 12000.0},
                   #"current13": {"amp": 0.6, "dur": 1000.0, "delay": 13000.0},
                   #"current14": {"amp": 0.4, "dur": 1000.0, "delay": 14000.0},
-                  "current2": {"amp": 0.2, "dur": 1000.0, "delay": 2000.0} # current15 delay 15000
+                  #"current15": {"amp": 0.2, "dur": 1000.0, "delay": 15000.0}
+                  "current2": {"amp": 0.2, "dur": 100.0, "delay": 200.0}
                 }
         model.set_stimulation_properties( self.ramp_up_down_currents )
         # =============================================================
         self.setup_parameters = { "dt": 0.025,   "celsius": 37,
-                                  "tstop": 3000, "v_init": -65 } # tstop 17000
+                                  #"tstop": 17000, "v_init": -65 }
+                                  "tstop": 300, "v_init": -65 }
         model.set_simulation_properties(self.setup_parameters)
         # =============================================================
         model.produce_spike_train()
@@ -146,6 +149,8 @@ class QuasiLinearTest(sciunit.Test, BinaryScore):
             if current_id in ramp_down_mean_spike_freq_for.keys():
                 observation = ramp_up_mean_spike_freq_for[current_id]
                 a_prediction = ramp_down_mean_spike_freq_for[current_id]
+                print observation
+                print a_prediction
                 x = BinaryScore.compute( observation, a_prediction )
                 y = BinaryScore(x)
                 score_for.update({current_id: y})
