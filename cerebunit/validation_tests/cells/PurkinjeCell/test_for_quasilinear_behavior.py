@@ -55,7 +55,7 @@ class QuasiLinearTest(sciunit.Test, BinaryScore):
         model.produce_spike_train()
         return model
 
-    def get_prediction_for_each_current(self, model):
+    def get_spike_train_for_each_current(self, model):
         '''
         fsd
         '''
@@ -118,23 +118,39 @@ class QuasiLinearTest(sciunit.Test, BinaryScore):
         # return the spike_train_for dictionary
         return ramp_up_spike_train_for, ramp_up_spike_train_for
 
+    def get_prediction_for_each_current(self, ramp_spike_train):
+        '''
+        self.get_prediction_for_each_current(ramp_up_spike_train_for)
+        For a given ramp (Ramp-Up or Ramp-Down) this function computes the
+        mean-firing-rate for the spike train of each current.
+        The result is stored as a dictionary with key = "currentID" whose
+        value is a dictionary, {"mean_freq": python.quantities}.
+        '''
+        ramp_mean_spike_freq = {}
+        for current_id, spike_array in ramp_spike_train.iteritems():
+            x = mfr(spike_array)
+            y = {current_id: {"mean_freq": x.rescale(pq.Hz)} }
+            ramp_mean_spike_freq.update(y)
+        return ramp_mean_spike_freq
+
     def process_prediction(self, model):
         '''
         fsd
         '''
-        ramp_up_spike_train_for, ramp_down_spike_train_for = \
-                        self.get_prediction_for_each_current(model)
-        #
-        ramp_up_mean_spike_freq = {}
-        for current_id, spike_array in ramp_up_spike_train_for.iteritems():
-            x = mfr(spike_array)
-            ramp_up_mean_spike_freq.update({current_id: x.rescale(pq.Hz)})
-        #
-        ramp_down_mean_spike_freq = {}
-        for current_id, spike_array in ramp_down_spike_train_for.iteritems():
-            x = mfr(spike_array)
-            ramp_down_mean_spike_freq.update({current_id: x.rescale(pq.Hz)})
-        #
+        # get spike trains for respective currents during both
+        # ramp Up and ramp Down stages
+        ramp_up_spike_train, ramp_down_spike_train = \
+                        self.get_spike_train_for_each_current(model)
+        # For Ramp-Up stage
+        # compute and store mean firing rate for each spike train
+        ramp_up_mean_spike_freq = \
+                self.get_prediction_for_each_current(ramp_up_spike_train)
+        # For Ramp-Down stage
+        # compute and store mean firing rate for each spike train
+        ramp_down_mean_spike_freq = \
+                self.get_prediction_for_each_current(ramp_down_spike_train)
+        # For both Ramp-Up and Ramp-Down
+        # Return the mean firing rates for respective currents
         return ramp_up_mean_spike_freq, ramp_down_mean_spike_freq
 
     def compute_score(self, observation, model, verbose=False):
