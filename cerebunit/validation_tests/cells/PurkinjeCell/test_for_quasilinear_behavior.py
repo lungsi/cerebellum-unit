@@ -7,7 +7,7 @@
 # ============================================================================
 
 import sciunit
-impor quantities as pq
+import quantities as pq
 from elephant.statistics import mean_firing_rate as mfr
 
 from cerebunit.capabilities.cells.response import ProducesSpikeTrain
