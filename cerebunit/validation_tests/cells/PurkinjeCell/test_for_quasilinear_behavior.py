@@ -175,6 +175,6 @@ class QuasiLinearTest(sciunit.Test, BinaryScore):
         print list_of_scores, sum(list_of_scores)
         #score.score = sum(list_of_scores)
         #score.score_for = score_for
-        return list_of_scores
+        return sum(list_of_scores)
 
 
