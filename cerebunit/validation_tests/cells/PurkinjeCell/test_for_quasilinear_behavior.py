@@ -56,6 +56,7 @@ class QuasiLinearTest(sciunit.Test, BinaryScore):
         '''
         fsd
         '''
+        last_I_id = len(self.ramp_up_down_currents)
         # get all the spike train for desired cell region
         cell_region = "vm_soma"
         response_type = "spike_train"
@@ -69,8 +70,8 @@ class QuasiLinearTest(sciunit.Test, BinaryScore):
                   all_spike_train.time_slice(spike_start, spike_stop) }
         # ========For Ramp-Down
         # get spike_train for last no_current
-        spike_start = self.ramp_up_down_currents["current15"]["delay"] \
-                      + self.ramp_up_down_currents["current15"]["dur"]
+        spike_start = self.ramp_up_down_currents["current"+str(last_I_id)]["delay"] \
+                      + self.ramp_up_down_currents["current"+str(last_I_id)]["dur"]
         spike_stop = self.setup_parameters["tstop"]
         ramp_down_spike_train_for = \
                 { "current0":
