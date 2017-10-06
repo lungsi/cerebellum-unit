@@ -172,6 +172,7 @@ class QuasiLinearTest(sciunit.Test, BinaryScore):
                 score_for.update({current_id: y})
                 list_of_scores.append(y.score)
         #
+        print list_of_scores, sum(list_of_scores)
         score.score = sum(list_of_scores)
         score.score_for = score_for
         return score
