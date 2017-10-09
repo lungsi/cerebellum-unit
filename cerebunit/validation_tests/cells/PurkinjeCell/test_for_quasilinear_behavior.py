@@ -19,8 +19,7 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, BinaryMatrixScore):
     ff
     '''
     required_capabilities = (ProducesSpikeTrain,)
-    score_type1 = BinaryScore
-    score_type2 = BinaryMatrixScore
+    score_type = BinaryMatrixScore
 
     def generate_prediction(self, model, verbose=False):
         '''
