@@ -11,15 +11,16 @@ import quantities as pq
 from elephant.statistics import mean_firing_rate as mfr
 
 from cerebunit.capabilities.cells.response import ProducesSpikeTrain
-from cerebunit.score_manager import BinaryScore
+from cerebunit.score_manager import BinaryScore, BinaryMatrixScore
 
 
-class QuasiLinearTest(sciunit.Test, BinaryScore):
+class QuasiLinearTest(sciunit.Test, BinaryScore, BinaryMatrixScore):
     '''
     ff
     '''
     required_capabilities = (ProducesSpikeTrain,)
-    score_type = BinaryScore
+    score_type1 = BinaryScore
+    score_type2 = BinaryMatrixScore
 
     def generate_prediction(self, model, verbose=False):
         '''
@@ -159,7 +160,7 @@ class QuasiLinearTest(sciunit.Test, BinaryScore):
         '''
         ramp_up_mean_spike_freq_for, ramp_down_mean_spike_freq_for = \
                                         self.process_prediction(model)
-        score_for = {}
+        score_breakdown = {}
         list_of_scores = []
         for current_id in ramp_up_mean_spike_freq_for.keys():
             if current_id in ramp_down_mean_spike_freq_for.keys():
@@ -189,13 +190,15 @@ class QuasiLinearTest(sciunit.Test, BinaryScore):
                                  step_down_freq,
                                  y] }
                 #
-                score_for.update(score_detail)
+                score_breakdown.update(score_detail)
                 list_of_scores.append(y.score)
         #
+        x2 = BinaryMatrixScore.compute( list_of_scores, score_breakdown )
+        score = BinaryMatrixScore(x2)
         print list_of_scores, sum(list_of_scores)
         print score_for
         #score.score = sum(list_of_scores)
         #score.score_for = score_for
-        return sum(list_of_scores)
+        return score
 
 
