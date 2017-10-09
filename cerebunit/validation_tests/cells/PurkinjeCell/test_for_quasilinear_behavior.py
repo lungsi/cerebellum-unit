@@ -165,11 +165,27 @@ class QuasiLinearTest(sciunit.Test, BinaryScore):
             if current_id in ramp_down_mean_spike_freq_for.keys():
                 observation = ramp_up_mean_spike_freq_for[current_id]
                 a_prediction = ramp_down_mean_spike_freq_for[current_id]
-                print observation, type(observation)
-                print a_prediction, type(a_prediction)
                 x = BinaryScore.compute( observation, a_prediction )
                 y = BinaryScore(x)
-                score_for.update({current_id: y})
+                #
+                if current_id=="current0":
+                    score_detail = \
+                            { current_id:
+                                ["0 nA",
+                                 observation["mean_freq"],
+                                 a_predictiony["mean_freq"],
+                                 y] }
+                else:
+                    amp = \
+                     self.ramp_up_down_currents[current_id]["amp"]
+                    score_detail = \
+                            { current_id:
+                                [str(amp)+" nA",
+                                 observation["mean_freq"],
+                                 a_prediction["mean_freq"],
+                                 y] }
+                #
+                score_for.update(score_detail)
                 list_of_scores.append(y.score)
         #
         print list_of_scores, sum(list_of_scores)
