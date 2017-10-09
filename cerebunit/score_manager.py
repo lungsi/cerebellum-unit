@@ -103,7 +103,7 @@ class BinaryMatrixScore(sciunit.Score):
         elif cummulative_score == no_of_scores:
             self.score = 1
         #
-        self.score_breakdown = breakdown_of_binary_scores
+        self.breakdown = breakdown_of_binary_scores
         return self.score
 
     _description = ( "The BinaryScore gives a score of 0 or 1 based on the comparison between prediction vs. measurement. "
