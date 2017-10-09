@@ -168,12 +168,16 @@ class QuasiLinearTest(sciunit.Test, BinaryScore):
                 x = BinaryScore.compute( observation, a_prediction )
                 y = BinaryScore(x)
                 #
+                step_up_freq = \
+                    "stepUp = "+str(observation["mean_freq"])+" Hz"
+                step_down_freq = \
+                    "stepDown = "+str(a_prediction["mean_freq"])+" Hz"
                 if current_id=="current0":
                     score_detail = \
                             { current_id:
                                 ["0 nA",
-                                 observation["mean_freq"],
-                                 a_prediction["mean_freq"],
+                                 step_up_freq,
+                                 step_down_freq,
                                  y] }
                 else:
                     amp = \
@@ -181,8 +185,8 @@ class QuasiLinearTest(sciunit.Test, BinaryScore):
                     score_detail = \
                             { current_id:
                                 [str(amp)+" nA",
-                                 observation["mean_freq"],
-                                 a_prediction["mean_freq"],
+                                 step_up_freq,
+                                 step_down_freq,
                                  y] }
                 #
                 score_for.update(score_detail)
