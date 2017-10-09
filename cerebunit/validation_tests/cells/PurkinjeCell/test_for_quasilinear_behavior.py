@@ -173,7 +173,7 @@ class QuasiLinearTest(sciunit.Test, BinaryScore):
                             { current_id:
                                 ["0 nA",
                                  observation["mean_freq"],
-                                 a_predictiony["mean_freq"],
+                                 a_prediction["mean_freq"],
                                  y] }
                 else:
                     amp = \
