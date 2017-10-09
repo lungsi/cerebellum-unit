@@ -195,7 +195,7 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, BinaryMatrixScore):
         x2 = BinaryMatrixScore.compute( list_of_scores, score_breakdown )
         score = BinaryMatrixScore(x2)
         print list_of_scores, sum(list_of_scores)
-        print score_for
+        #print score_for
         #score.score = sum(list_of_scores)
         #score.score_for = score_for
         return score
