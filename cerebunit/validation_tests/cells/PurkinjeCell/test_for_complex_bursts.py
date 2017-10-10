@@ -8,10 +8,11 @@
 
 import os
 
+import numpy as np
 import sciunit
 import quantities as pq
 from elephant.statistics import mean_firing_rate as mfr
-from elephant.statistics import fanofactor
+from elephant.statistics import isi
 
 from cerebunit.file_manager import get_folder_path_and_name as gfpan
 from cerebunit.score_manager import BinaryScore
@@ -39,11 +40,11 @@ class ComplexBurstingTest(sciunit.Test, BinaryScore):
         # Inject current >= 2 nA
         self.inj_current = \
                 { "current1":
-                    {"amp": 2.0, "dur": 1000.0, "delay": 500.0} }
+                    {"amp": 2.0, "dur": 4000.0, "delay": 1000.0} }
         model.set_stimulation_properties( self.inj_current )
         #
         setup_parameters = { "dt": 0.025,   "celsius": 37,
-                             "tstop": 2500, "v_init": -65 }
+                             "tstop": 4000, "v_init": -65 }
         model.cell_regions = {"vm_soma": 0.0}
         model.set_simulation_properties(setup_parameters)
         #
@@ -71,7 +72,15 @@ class ComplexBurstingTest(sciunit.Test, BinaryScore):
         spike_stop = spike_start \
                 + self.inj_current[current_key]["dur"]
         # slice spike train for current injection
-        return all_spike_train.time_slice(spike_start, spike_stop)
+        sliced_spike_train = \
+                all_spike_train.time_slice(spike_start, spike_stop)
+        #
+        sliced_indices = []
+        for i, j in enumerate(all_spike_train):
+            if j >= spike_start:
+                sliced_indices.append(i)
+        #
+        return all_spike_train, sliced_spike_train, sliced_indices
 
 
     def process_prediction(self, model):
@@ -80,9 +89,15 @@ class ComplexBurstingTest(sciunit.Test, BinaryScore):
         process the spike_train prediction to get the  mean
         firing rate from soma during injection alone.
         '''
-        spike_train = self.get_spike_train_for_current(model)
-        return spike_train, mfr(spike_train).rescale(pq.Hz)
-
+        # get the spike trains
+        all_spike_train, sliced_spike_train, sliced_indices = \
+                self.get_spike_train_for_current(model)
+        # compute the mean freq for spike train with injection
+        freq = mfr(sliced_spike_train).rescale(pq.Hz)
+        #
+        all_isi = isi(all_spike_train)
+        sliced_isi = all_isi(sliced_indices[0]:sliced_indices[-1])
+        return freq, sliced_isi
 
     def compute_score(self, observation, model, verbose=False):
         '''
@@ -96,7 +111,9 @@ class ComplexBurstingTest(sciunit.Test, BinaryScore):
         the experimental_data to get the binary score; 0 if the
         prediction correspond with experiment, else 1.
         '''
-        spike_train, a_prediction = self.process_prediction(model)
+        a1_prediction, sliced_isi = self.process_prediction(model)
+        coeff_variation = np.std(sliced_isi)/np.mean(sliced_isi)
+        a2_prediction = coeff_variation.item()
         x = BinaryScore.compute( observation,
                                  a_prediction  )
         score = BinaryScore(x)
@@ -106,7 +123,9 @@ class ComplexBurstingTest(sciunit.Test, BinaryScore):
         else:
             ans = "The model " + model.name + " failed the " + self.__class__.__name__ + ". The mean firing rate of the model = " + str(a_prediction) + " and the validation data is " + str(observation)
         print ans
-        print fanofactor(spike_train)
+        print a1_prediction
+        print a2_prediction
+        #print fanofactor(spike_train)
         return score
 
 
