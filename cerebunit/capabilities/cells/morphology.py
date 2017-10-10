@@ -7,11 +7,11 @@ class CanDisconnectDendrites(sciunit.Capability):
     '''
     def __init__(self):
         pass
-    def disconnect_all_dendrites(self):
+    def disconnect_dendrites_from_soma(self):
         '''
         disconnect all dendrites from the soma
         '''
-        raise NotImplementedError("Must implement disconnect_all_dendrites")
+        raise NotImplementedError("Must implement disconnect_dendrites_from_soma")
 # ======================================================================
 #
 # ========================Turns Off AIS Channel=========================
