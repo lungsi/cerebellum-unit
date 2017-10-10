@@ -74,26 +74,30 @@ class BinaryScore(sciunit.Score):
         return "BinaryScore is " + str(self.score)
 # ============================================================================
 #
-# =========================BinaryMatrixScore==================================
-# created  21 September 2017 Lungsi
-# modified 29 September 2017 Lungsi
+# =========================OverallBinaryScore==================================
+# created  09 October 2017 Lungsi
+# modified 
 #
-class BinaryMatrixScore(sciunit.Score):
+class OverallBinaryScore(sciunit.Score):
     '''
-    A Binary Score.
-    0 if the prediction is not in the interval of the measurement within a margin of error (epsilon).
+    An Overall Binary Score.
+    0 if all the Binary Scores in a set are 0 or < sum of all the scores
+    1 if the sum of all the scores = number of scores
     '''
     #
     # -----------------------------Use Case-----------------------------------
-    # x = BinaryScore.compute( measurement, prediction )
-    # score = BinaryScore(x)
+    # x = OverallBinaryScore.compute( list_of_binary_scores,
+    #                                 breakdown_of_binary_scores )
+    # score = OverallBinaryScore(x)
+    # score.score # will give you the 0 or 1
+    # score.breakdown # will give you the breakdown of the scores
     # ------------------------------------------------------------------------
     #
     @classmethod
     def compute(self, list_of_binary_scores, breakdown_of_binary_scores):
-        # mesurement is in dictionary form whose value has
-        # magnitude and python quantity
-        # default epsilon = 10**(-3)
+        # list_of_binary_scores = list of 0's and 1's
+        # breakdown_of_binary_scores = any details of each binary score
+        #
         no_of_scores = len(list_of_binary_scores)
         cummulative_score = sum(list_of_binary_scores)
         if cummulative_score == 0:
@@ -106,21 +110,20 @@ class BinaryMatrixScore(sciunit.Score):
         self.breakdown = breakdown_of_binary_scores
         return self.score
 
-    _description = ( "The BinaryScore gives a score of 0 or 1 based on the comparison between prediction vs. measurement. "
-                   + "The prediction is a python quantities, i.e, it is in the form of array(x.x) * <some_unit>. "
-                   + "The measurement is also a python quantity, but in dictionary form. "
-                   + "If the measurement has only 1-key, its value is the one that is the reference. "
-                   + "The predicted value is then compared against the measurement with margin of error given by a default epsilon value. "
-                   + "Therefore, BinaryScore checks that the predicted value is inside the interval. "
-                   + "If it is not it, a score-0 is given. "
-                   + "If the measurement has an addition error-key its value is the epsilon.")
+    _description = ( "The OverallBinaryScore gives a score of 0 or 1 based on the BinaryScores for each measurement vs prediction in a sample. "
+                   + "The BinaryScores themselves can either be 0 or 1. "
+                   + "Lets say the list of BinaryScores are  [0, 0, 0, 0, 0]. "
+                   + "The OverallBinaryScore = 0 if sum([0, 0, 0, 0, 0]) = 0 or < len([0,0,0,0,0]) "
+                   + "The OverallBinaryScore = 1 if sum([1, 1, 1, 1, 1]) = len([1,1,1,1,1]) "
+                   + "Therefore, OverallBinaryScore checks that all the BinaryScore are 1 "
+                   + "If it is not it, a score-0 is given.")
 
     @property
     def sort_key(self):
         return self.score
 
     def __str__(self):
-        return "BinaryMatrixScore is " + str(self.score)
+        return "OverallBinaryScore is " + str(self.score)
 # ============================================================================
 #
 # ==========================Score=============================================
