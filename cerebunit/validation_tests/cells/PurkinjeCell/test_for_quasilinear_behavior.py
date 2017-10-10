@@ -1,7 +1,7 @@
 # ============================================================================
 # test_for_quasilinear_behavior.py
 #
-# created  01 September 2017 Lungsi
+# created  06 September 2017 Lungsi
 # modified 09 October 2017 Lungsi
 #
 # ============================================================================
@@ -276,6 +276,10 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
         # Send all the scores and its breakdown to get OverallBinary score
         x2 = OverallBinaryScore.compute( list_of_scores, score_breakdown )
         score = OverallBinaryScore(x2)
+        if score.score==1:
+            ans = "The model " + model.name + " passed the " + self.__class__.__name__ + ". The mean spike frequencies of a given amplitude of injection are different for ramp-up phase versus ramp-down phase."
+        else:
+            ans = "The model " + model.name + " failed the " + self.__class__.__name__ + ". The mean spike frequencies of an (or many) amplitude of injection are similar for ramp-up phase versus ramp-down phase."
         return score
 
 
