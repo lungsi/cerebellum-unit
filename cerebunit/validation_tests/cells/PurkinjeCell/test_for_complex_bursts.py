@@ -38,7 +38,7 @@ class ComplexBurstingTest(sciunit.Test, BinaryScore):
         # Inject current >= 2 nA
         self.inj_current = \
                 { "current1":
-                    {"amp": 2.0. "dur": 1000.0, "delay": 500.0} }
+                    {"amp": 2.0, "dur": 1000.0, "delay": 500.0} }
         model.set_stimulation_properties( self.inj_current )
         #
         setup_parameters = { "dt": 0.025,   "celsius": 37,
