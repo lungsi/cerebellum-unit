@@ -3,6 +3,6 @@ from .test_for_spontaneous_firing import SpontaneousFiringTest
 from .test_for_firing_without_AIS_channels import NoChannelsAISTest
 from .test_for_firing_without_dendrites import NoDendritesTest
 from .test_for_quasilinear_behavior import QuasiLinearTest
-from .negative_0pt1_to_1_nA_test import NegativeStepCurrentTest
+from .test_for_complex_bursts import ComplexBurstingTest
 from .ca_spikes_na_bursts_test import CaSpikesNaBurstsTest
 from .knockout_Cav2pt1_test import KOCav2pt1Test
