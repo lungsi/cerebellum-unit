@@ -25,7 +25,7 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
     '''
     required_capabilities = (ProducesSpikeTrain,)
     score_type = OverallBinaryScore
-
+    #
     def generate_prediction(self, model, verbose=False):
         '''
         Generates spike train from "vm_soma", cell region.
