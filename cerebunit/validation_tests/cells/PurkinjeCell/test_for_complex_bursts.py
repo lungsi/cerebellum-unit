@@ -11,6 +11,7 @@ import os
 import sciunit
 import quantities as pq
 from elephant.statistics import mean_firing_rate as mfr
+from elephant.statistics import fanofactor
 
 from cerebunit.file_manager import get_folder_path_and_name as gfpan
 from cerebunit.score_manager import BinaryScore
@@ -80,7 +81,7 @@ class ComplexBurstingTest(sciunit.Test, BinaryScore):
         firing rate from soma during injection alone.
         '''
         spike_train = self.get_spike_train_for_current(model)
-        return mfr(spike_train).rescale(pq.Hz)
+        return spike_train, mfr(spike_train).rescale(pq.Hz)
 
 
     def compute_score(self, observation, model, verbose=False):
@@ -95,7 +96,7 @@ class ComplexBurstingTest(sciunit.Test, BinaryScore):
         the experimental_data to get the binary score; 0 if the
         prediction correspond with experiment, else 1.
         '''
-        a_prediction = self.process_prediction(model)
+        spike_train, a_prediction = self.process_prediction(model)
         x = BinaryScore.compute( observation,
                                  a_prediction  )
         score = BinaryScore(x)
@@ -105,6 +106,7 @@ class ComplexBurstingTest(sciunit.Test, BinaryScore):
         else:
             ans = "The model " + model.name + " failed the " + self.__class__.__name__ + ". The mean firing rate of the model = " + str(a_prediction) + " and the validation data is " + str(observation)
         print ans
+        print fanofactor(spike_train)
         return score
 
 
