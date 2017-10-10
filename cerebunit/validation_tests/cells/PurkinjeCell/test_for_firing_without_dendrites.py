@@ -81,4 +81,8 @@ class NoDendritesTest(sciunit.Test, BinaryScore):
         x = BinaryScore.compute( observation, a_prediction )
         score = BinaryScore(x)
         score.description = "The No Dendrites attached to soma, Soma Firing test results in the prediction by the model to be " + str(processed_prediction) + " which means that the " + str(score)
+        if score.score==1:
+            ans = "The model " + model.name + " passed the " + self.__class__.__name__ + ". It shows that firing from the soma is not due to the dendrites, i.e, spike originates from soma."
+        else:
+            ans = "The model " + model.name + " failed the " + self.__class__.__name__ + ". It shows that firing from the soma is due to the dendrites, i.e, spike does not originate from soma."
         return score
