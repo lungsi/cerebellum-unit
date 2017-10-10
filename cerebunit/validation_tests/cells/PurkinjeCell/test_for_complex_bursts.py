@@ -96,7 +96,7 @@ class ComplexBurstingTest(sciunit.Test, BinaryScore):
         freq = mfr(sliced_spike_train).rescale(pq.Hz)
         #
         all_isi = isi(all_spike_train)
-        sliced_isi = all_isi(sliced_indices[0]:sliced_indices[-1])
+        sliced_isi = all_isi[ sliced_indices[0] : sliced_indices[-1] ]
         return freq, sliced_isi
 
     def compute_score(self, observation, model, verbose=False):
