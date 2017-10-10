@@ -70,7 +70,7 @@ class ComplexBurstingTest(sciunit.Test, BinaryScore):
         spike_stop = spike_start \
                 + self.inj_current[current_key]["dur"]
         # slice spike train for current injection
-        return all_spike_train(spike_start, spike_stop)
+        return all_spike_train.time_slice(spike_start, spike_stop)
 
 
     def process_prediction(self, model):
