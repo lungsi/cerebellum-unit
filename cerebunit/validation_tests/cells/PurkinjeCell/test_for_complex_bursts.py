@@ -115,13 +115,13 @@ class ComplexBurstingTest(sciunit.Test, BinaryScore):
         coeff_variation = np.std(sliced_isi)/np.mean(sliced_isi)
         a2_prediction = coeff_variation.item()
         x = BinaryScore.compute( observation,
-                                 a_prediction  )
+                                 a1_prediction  )
         score = BinaryScore(x)
-        score.description = "The spontaneous firing test defined by the mean firing rate of the model = " + str(a_prediction) + " compared against the observed experimental data " + str(observation) + " whose " + str(score)
+        score.description = "The spontaneous firing test defined by the mean firing rate of the model = " + str(a1_prediction) + " compared against the observed experimental data " + str(observation) + " whose " + str(score)
         if score.score==1:
-            ans = "The model " + model.name + " passed the " + self.__class__.__name__ + ". The mean firing rate of the model = " + str(a_prediction) + " and the validation data is " + str(observation)
+            ans = "The model " + model.name + " passed the " + self.__class__.__name__ + ". The mean firing rate of the model = " + str(a1_prediction) + " and the validation data is " + str(observation)
         else:
-            ans = "The model " + model.name + " failed the " + self.__class__.__name__ + ". The mean firing rate of the model = " + str(a_prediction) + " and the validation data is " + str(observation)
+            ans = "The model " + model.name + " failed the " + self.__class__.__name__ + ". The mean firing rate of the model = " + str(a1_prediction) + " and the validation data is " + str(observation)
         print ans
         print a1_prediction
         print a2_prediction
