@@ -46,7 +46,9 @@ class ComplexBurstingTest(sciunit.Test, BinaryScore):
         setup_parameters = { "dt": 0.025,   "celsius": 37,
                              "tstop": 4000, "v_init": -65 }
         model.cell_regions = {"vm_soma": 0.0}
-        model.set_simulation_properties(setup_parameters)
+        model.set_simulation_properties( setup_parameters )
+        #
+        model.set_stimulation_properties( self.inj_current )
         #
         model.produce_spike_train()
         #self.process_prediction(model)
@@ -81,6 +83,11 @@ class ComplexBurstingTest(sciunit.Test, BinaryScore):
                 sliced_indices.append(i)
         #
         return all_spike_train, sliced_spike_train, sliced_indices
+
+    def get_burst_start_end(self, whole_spike_train):
+        '''
+        asd
+        '''
 
 
     def process_prediction(self, model):
