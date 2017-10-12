@@ -41,7 +41,11 @@ class ComplexBurstingTest(sciunit.Test, BinaryScore):
         self.inj_current = \
                 { "current1":
                     {"amp": 2.0, "dur": 4000.0, "delay": 1000.0} }
-        model.set_stimulation_properties( self.inj_current )
+        stimulus = \
+                model.set_stimulation_properties( self.inj_current )
+        # below is necessary step for correct simulation result
+        [ stimulus[i].loc(0.5, sec=model.cell.soma) \
+                for i in range(len(stimulus)) ]
         #
         setup_parameters = { "dt": 0.025,   "celsius": 37,
                              "tstop": 4000, "v_init": -65 }
