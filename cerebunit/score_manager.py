@@ -64,7 +64,7 @@ class BinaryScore(sciunit.Score):
                         else:
                             self.score = 0
                     else:
-                        ValueError "The inequality value must be of the form; > number or < number"
+                        raise ValueError("The inequality value must be of the form; > number or < number")
                 else:
                     if measurement[key]-epsilon <= prediction \
                             <= measurement[key]+epsilon:
