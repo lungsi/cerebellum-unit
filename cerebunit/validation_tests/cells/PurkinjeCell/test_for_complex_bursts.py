@@ -128,9 +128,9 @@ class ComplexBurstingTest(sciunit.Test, BinaryScore):
         score = BinaryScore(x)
         score.description = "The complex bursting test is defined by checking if the coefficient of variation of the model = " + str(a_prediction) + " is " + str(observation) + " whose " + str(score)
         if score.score==1:
-            ans = "The model " + model.name + " passed the " + self.__class__.__name__ + ". The coefficient of variation of the model = " + str(a_prediction)
+            ans = "The model " + model.name + " passed the " + self.__class__.__name__ + ". The coefficient of variation of the model = " + str(a_prediction) + " > 1."
         else:
-            ans = "The model " + model.name + " failed the " + self.__class__.__name__ + ". The coefficient of variation of the model = " + str(a_prediction)
+            ans = "The model " + model.name + " failed the " + self.__class__.__name__ + ". The coefficient of variation of the model = " + str(a_prediction) + " not > 1."
         print ans
         return score
 
