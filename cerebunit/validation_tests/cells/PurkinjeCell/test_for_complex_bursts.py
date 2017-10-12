@@ -109,7 +109,7 @@ class ComplexBurstingTest(sciunit.Test, BinaryScore):
         current_key = self.inj_current.keys()[0] # for only 1 current
         current_start = \
                 self.inj_current[current_key]["delay"]
-        current_stop = spike_start \
+        current_stop = current_start \
                 + self.inj_current[current_key]["dur"]
         #
         sliced_indices = []
