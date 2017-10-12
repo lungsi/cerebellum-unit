@@ -105,9 +105,21 @@ class ComplexBurstingTest(sciunit.Test, BinaryScore):
         # get all the spike train for desired cell region
         all_spike_train = \
                 model.predictions["spike_train"]["vm_soma"]
+        # set the time boundaries for the spike train
+        current_key = self.inj_current.keys()[0] # for only 1 current
+        current_start = \
+                self.inj_current[current_key]["delay"]
+        current_stop = spike_start \
+                + self.inj_current[current_key]["dur"]
+        #
+        sliced_indices = []
+        for i, j in enumerate(all_spike_train):
+            if j >= current_start and j <= current_stop:
+                sliced_indices.append(i)
         #
         all_isi = isi(all_spike_train)
         sliced_isi = all_isi[ sliced_indices[0] : sliced_indices[-1] ]
+        #
         return sliced_isi
 #
 #
