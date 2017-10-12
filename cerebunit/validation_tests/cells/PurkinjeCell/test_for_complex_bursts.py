@@ -11,7 +11,6 @@ import os
 import numpy as np
 import sciunit
 import quantities as pq
-#from elephant.statistics import mean_firing_rate as mfr
 from elephant.statistics import isi
 #
 from cerebunit.file_manager import get_folder_path_and_name as gfpan
@@ -57,36 +56,6 @@ class ComplexBurstingTest(sciunit.Test, BinaryScore):
         model.produce_spike_train()
         #self.process_prediction(model)
         return model
-#
-    def get_spike_train_for_current(self, model):
-        '''
-        The model.produce_spike_train() results in spike train for
-        the initial (no injection), injection and later (no inject)
-        This function slices the spike train during injection alone.
-        ======================Use Case============================
-        spike_train = get_spike_train_for_current(model)
-        ===========================================================
-        This function is called by process_prediction
-        '''
-        # get all the spike train for desired cell region
-        all_spike_train = \
-                model.predictions["spike_train"]["vm_soma"]
-        # set the time boundaries for the spike train
-        current_key = self.inj_current.keys()[0] # for only 1 current
-        spike_start = \
-                self.inj_current[current_key]["delay"]
-        spike_stop = spike_start \
-                + self.inj_current[current_key]["dur"]
-        # slice spike train for current injection
-        sliced_spike_train = \
-                all_spike_train.time_slice(spike_start, spike_stop)
-        #
-        sliced_indices = []
-        for i, j in enumerate(all_spike_train):
-            if j >= spike_start:
-                sliced_indices.append(i)
-        #
-        return all_spike_train, sliced_spike_train, sliced_indices
 #
 #
     def get_isi_for_current(self, model):
@@ -137,8 +106,8 @@ class ComplexBurstingTest(sciunit.Test, BinaryScore):
         sliced_isi = self.get_isi_for_current(model)
         # compute the coeff. of variation
         coeff_variation = np.std(sliced_isi)/np.mean(sliced_isi)
-        #
-        return coeff_variation
+        # return without quantity term since this is dimensionless
+        return coeff_variation.item()
 #
 #
     def compute_score(self, observation, model, verbose=False):
@@ -163,7 +132,6 @@ class ComplexBurstingTest(sciunit.Test, BinaryScore):
         else:
             ans = "The model " + model.name + " failed the " + self.__class__.__name__ + ". The coefficient of variation of the model = " + str(a_prediction)
         print ans
-        print a_prediction
         return score
 
 
