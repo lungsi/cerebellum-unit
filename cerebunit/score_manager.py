@@ -50,7 +50,7 @@ class BinaryScore(sciunit.Score):
         else:
             # For only one key
             for key in measurement:
-                if key=="inequality":
+                if key.lower()=="inequality":
                     str_num = measurement[key].split()[1]
                     num = float( ''.join(x for x in str_num if x.isdigit() or x=='.') )
                     if ">" in measurement[key]:
