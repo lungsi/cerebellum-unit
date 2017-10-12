@@ -53,7 +53,10 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
                   "current15": {"amp": 0.2, "dur": 1000.0, "delay": 15000.0}
                   #"current2": {"amp": 0.2, "dur": 100.0, "delay": 200.0}
                 }
-        model.set_stimulation_properties( self.ramp_up_down_currents )
+        stimulus = \
+                model.set_stimulation_properties( self.ramp_up_down_currents )
+        [ stimulus[i].loc(0.5, sec=model.cell.soma) \
+                for i in range(len(stimulus)) ]
         # =============================================================
         self.setup_parameters = { "dt": 0.025,   "celsius": 37,
                                   "tstop": 17000, "v_init": -65 }
