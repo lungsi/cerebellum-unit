@@ -13,7 +13,7 @@ import sciunit
 
 # ==========================BinaryScore=======================================
 # created  21 September 2017 Lungsi
-# modified 29 September 2017 Lungsi
+# modified 12 October 2017 Lungsi added functionality for inequality
 #
 class BinaryScore(sciunit.Score):
     '''
@@ -50,11 +50,27 @@ class BinaryScore(sciunit.Score):
         else:
             # For only one key
             for key in measurement:
-                if measurement[key]-epsilon <= prediction \
-                        <= measurement[key]+epsilon:
-                    self.score = 1
+                if key=="inequality":
+                    str_num = measurement[key].split()[1]
+                    num = float( ''.join(x for x in str_num if x.isdigit() or x=='.') )
+                    if ">" in measurement[key]:
+                        if prediction > num:
+                            self.score = 1
+                        else:
+                            self.score = 0
+                    elif "<" in measurement[key]:
+                        if prediction < num:
+                            self.score = 1
+                        else:
+                            self.score = 0
+                    else:
+                        ValueError "The inequality value must be of the form; > number or < number"
                 else:
-                    self.score = 0
+                    if measurement[key]-epsilon <= prediction \
+                            <= measurement[key]+epsilon:
+                        self.score = 1
+                    else:
+                        self.score = 0
         return self.score
 
     _description = ( "The BinaryScore gives a score of 0 or 1 based on the comparison between prediction vs. measurement. "
