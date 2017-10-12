@@ -55,6 +55,7 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
                 }
         stimulus = \
                 model.set_stimulation_properties( self.ramp_up_down_currents )
+        # below line is necessary for the simulation to run "correctly"
         [ stimulus[i].loc(0.5, sec=model.cell.soma) \
                 for i in range(len(stimulus)) ]
         # =============================================================
