@@ -284,6 +284,7 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
             ans = "The model " + model.name + " passed the " + self.__class__.__name__ + ". The mean spike frequencies of a given amplitude of injection are different for ramp-up phase versus ramp-down phase."
         else:
             ans = "The model " + model.name + " failed the " + self.__class__.__name__ + ". The mean spike frequencies of an (or many) amplitude of injection are similar for ramp-up phase versus ramp-down phase."
+        print ans
         return score
 
 
