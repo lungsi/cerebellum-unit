@@ -36,26 +36,26 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
         '''
         # ============Ramp Up and then Down Step Currents (nA)==============
         self.ramp_up_down_currents = \
-                { "current1": {"amp": 0.2, "dur": 100.0, "delay": 100.0},
-                  "current2": {"amp": 0.4, "dur": 100.0, "delay": 200.0},
-                  "current3": {"amp": 0.5, "dur": 100.0, "delay": 300.0},
-                  "current4": {"amp": 0.4, "dur": 100.0, "delay": 400.0},
-                  "current5": {"amp": 0.2, "dur": 100.0, "delay": 500.0},
-                  #"current1": {"amp": 0.2, "dur": 1000.0, "delay": 1000.0},
-                  #"current2": {"amp": 0.4, "dur": 1000.0, "delay": 2000.0},
-                  #"current3": {"amp": 0.6, "dur": 1000.0, "delay": 3000.0},
-                  #"current4": {"amp": 0.8, "dur": 1000.0, "delay": 4000.0},
-                  #"current5": {"amp": 1.0, "dur": 1000.0, "delay": 5000.0},
-                  #"current6": {"amp": 1.2, "dur": 1000.0, "delay": 6000.0},
-                  #"current7": {"amp": 1.4, "dur": 1000.0, "delay": 7000.0},
-                  #"current8": {"amp": 1.6, "dur": 1000.0, "delay": 8000.0},
-                  #"current9": {"amp": 1.4, "dur": 1000.0, "delay": 9000.0},
-                  #"current10": {"amp": 1.2, "dur": 1000.0, "delay": 10000.0},
-                  #"current11": {"amp": 1.0, "dur": 1000.0, "delay": 11000.0},
-                  #"current12": {"amp": 0.8, "dur": 1000.0, "delay": 12000.0},
-                  #"current13": {"amp": 0.6, "dur": 1000.0, "delay": 13000.0},
-                  #"current14": {"amp": 0.4, "dur": 1000.0, "delay": 14000.0},
-                  #"current15": {"amp": 0.2, "dur": 1000.0, "delay": 15000.0}
+                { #"current1": {"amp": 0.2, "dur": 100.0, "delay": 100.0},
+                  #"current2": {"amp": 0.4, "dur": 100.0, "delay": 200.0},
+                  #"current3": {"amp": 0.5, "dur": 100.0, "delay": 300.0},
+                  #"current4": {"amp": 0.4, "dur": 100.0, "delay": 400.0},
+                  #"current5": {"amp": 0.2, "dur": 100.0, "delay": 500.0},
+                  "current1": {"amp": 0.2, "dur": 1000.0, "delay": 1000.0},
+                  "current2": {"amp": 0.4, "dur": 1000.0, "delay": 2000.0},
+                  "current3": {"amp": 0.6, "dur": 1000.0, "delay": 3000.0},
+                  "current4": {"amp": 0.8, "dur": 1000.0, "delay": 4000.0},
+                  "current5": {"amp": 1.0, "dur": 1000.0, "delay": 5000.0},
+                  "current6": {"amp": 1.2, "dur": 1000.0, "delay": 6000.0},
+                  "current7": {"amp": 1.4, "dur": 1000.0, "delay": 7000.0},
+                  "current8": {"amp": 1.6, "dur": 1000.0, "delay": 8000.0},
+                  "current9": {"amp": 1.4, "dur": 1000.0, "delay": 9000.0},
+                  "current10": {"amp": 1.2, "dur": 1000.0, "delay": 10000.0},
+                  "current11": {"amp": 1.0, "dur": 1000.0, "delay": 11000.0},
+                  "current12": {"amp": 0.8, "dur": 1000.0, "delay": 12000.0},
+                  "current13": {"amp": 0.6, "dur": 1000.0, "delay": 13000.0},
+                  "current14": {"amp": 0.4, "dur": 1000.0, "delay": 14000.0},
+                  "current15": {"amp": 0.2, "dur": 1000.0, "delay": 15000.0}
                 }
         stimulus = \
                 model.set_stimulation_properties( self.ramp_up_down_currents )
@@ -64,8 +64,8 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
                 for i in range(len(stimulus)) ]
         # =============================================================
         self.setup_parameters = { "dt": 0.025,   "celsius": 37,
-                                  #"tstop": 17000, "v_init": -65 }
-                                  "tstop": 600, "v_init": -65 }
+                                  "tstop": 17000, "v_init": -65 }
+                                  #"tstop": 600, "v_init": -65 }
         model.set_simulation_properties(self.setup_parameters)
         # =============================================================
         model.produce_spike_train()
@@ -180,7 +180,6 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
                     { "current"+str(dwn_idx): # 0 is reserved for no injection
                         all_spike_train.time_slice(spike_start, spike_stop) }
                 ramp_down_spike_train_for.update(spike_train)
-            print ramp_down_indices
         # ============================================================
         # return the dictionaries for both ramp-up and ramp-down phases
         return ramp_up_spike_train_for, ramp_down_spike_train_for
@@ -234,8 +233,6 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
                 self.get_prediction_for_each_current(ramp_down_spike_train)
         # For both Ramp-Up and Ramp-Down
         # Return the mean firing rates (respective currents)
-        print ramp_up_spike_train, ramp_down_spike_train
-        print ramp_up_mean_spike_freq, ramp_down_mean_spike_freq
         return ramp_up_mean_spike_freq, ramp_down_mean_spike_freq
 #
 #
