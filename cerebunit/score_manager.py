@@ -63,8 +63,13 @@ class BinaryScore(sciunit.Score):
                             self.score = 1
                         else:
                             self.score = 0
+                    elif "!=" in measurement[key]:
+                        if prediction != num:
+                            self.score = 1
+                        else:
+                            self.score = 0
                     else:
-                        raise ValueError("The inequality value must be of the form; > number or < number")
+                        raise ValueError("The inequality value must be of the form; > number or < number or != number")
                 else:
                     amount = measurement[key]
                     if type(amount) is pq.quantity.Quantity:
