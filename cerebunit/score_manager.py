@@ -123,7 +123,7 @@ class OverallBinaryScore(sciunit.Score):
         cummulative_score = sum(list_of_binary_scores)
         if cummulative_score == 0:
             self.score = 0
-        elif (cummulative_score >= 0) and (cumulative_score < no_of_scores):
+        elif (cummulative_score >= 0) and (cummulative_score < no_of_scores):
             self.score = 0
         elif cummulative_score == no_of_scores:
             self.score = 1
