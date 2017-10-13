@@ -170,13 +170,13 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
             for j, x in enumerate(ramp_up_indices):
                 if x in [idx]:
                     spike_train = \
-                        { "current"+str(j):
+                        { "current"+str(j+1):
                           all_spike_train.time_slice(spike_start, spike_stop) }
                     ramp_up_spike_train_for.update(spike_train)
             for j, x in enumerate(ramp_down_indices):
                 if x in [idx]:
                     spike_train = \
-                        { "current"+str(j):
+                        { "current"+str(j+1):
                           all_spike_train.time_slice(spike_start, spike_stop) }
                     ramp_down_spike_train_for.update(spike_train)
             # if the current stimulation is during ramp-up phase
@@ -269,11 +269,13 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
         # =======Loop through each current id in ramp up phase======
         # Note: this includes current0, no injection
         for current_id in ramp_up_mean_spike_freq_for.keys():
+            # take corresponding freq at ramp up as observation
+            observation = \
+                    { "inequality":
+                            ramp_up_mean_spike_freq_for[current_id]}
             # if this current id is also in ramp down phase
             if current_id in ramp_down_mean_spike_freq_for.keys():
-                # take corresponding freq at ramp up as observation
-                observation = ramp_up_mean_spike_freq_for[current_id]
-                # and corresponding freq at ramp down as prediction
+                # take corresponding freq at ramp down as prediction
                 a_prediction = ramp_down_mean_spike_freq_for[current_id]
                 # get their Binary score
                 x = BinaryScore.compute( observation, a_prediction )
