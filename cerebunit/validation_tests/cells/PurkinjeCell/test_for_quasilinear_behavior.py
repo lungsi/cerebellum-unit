@@ -273,7 +273,7 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
             raw_observation = ramp_up_mean_spike_freq_for[current_id]
             observation = \
                     { "inequality":
-                            "> " + str(raw_observation["mean_freq"] }
+                            "> " + str(raw_observation["mean_freq"]) }
             # if this current id is also in ramp down phase
             if current_id in ramp_down_mean_spike_freq_for.keys():
                 # take corresponding freq at ramp down as prediction
