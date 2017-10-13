@@ -84,10 +84,6 @@ class NoChannelsAISTest(sciunit.Test, BinaryScore):
         a_prediction = processed_prediction.item() # just the magnitude
         x = BinaryScore.compute( observation, a_prediction )
         score = BinaryScore(x)
-        score.description = "The No Channels in AIS Firing test results in the prediction by the model to be " + str(processed_prediction) + " which means that the " + str(score)
-        if score.score==1:
-            ans = "The model " + model.name + " passed the " + self.__class__.__name__ + ". Without the AIS there is no firing in the soma."
-        else:
-            ans = "The model " + model.name + " failed the " + self.__class__.__name__ + ". There is firing in the soma even without the AIS."
-        print ans
+        score.description = "The " + self.__class__.__name__  + " results in the prediction by the " + model.name  + " to be " + str(processed_prediction) + " which means that the " + str(score)
+        print score.description
         return score
