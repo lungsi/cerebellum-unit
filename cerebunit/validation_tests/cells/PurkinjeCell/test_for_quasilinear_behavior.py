@@ -151,14 +151,13 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
                         if k >= ramp_down_start_idx
                         and k <= ramp_down_stop_idx ]
         #
-        #ramp_up_idx = 1   # first current injection is current1
-        #ramp_down_idx = 1 # first current injection is current1
-        #
         # Note: ramp_down_stop_idx is not the last currentID in ramp-down
-        # The last currentID in ramp-up = last currentID in ramp-down
+        # The last currentID in ramp-down = first currentID in ramp-up
+        ramp_down_indices.reverse()
         # This is done as follows:
         # ============Loop through each current injection==============
         no_of_I_per_ramp = len(ramp_up_indices) # ramp-up = ramp-down
+        dwn_idx = 1
         for i in range(no_of_Iclamps):
             # currentID in self.ramp_up_down_currents start from current1
             idx = i+1
@@ -170,24 +169,22 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
             spike_stop = spike_start + inj_times["dur"]
             # if the current stimulation is during ramp-up phase
             # i.e idx in ramp_up_indices
-            for j, x in enumerate(ramp_up_indices):
-                if x in [idx]:
-                    # slice the spike train from total spike train into a
-                    # dictionary with respective currenti tag
-                    spike_train = \
-                        { "current"+str(j+1):
-                          all_spike_train.time_slice(spike_start, spike_stop) }
-                    # add the dictionary into the dictionary for ramp-up trains
-                    ramp_up_spike_train_for.update(spike_train)
+            if idx <= ramp_up_indices[-1]:
+                # slice the spike train from total spike train into a
+                # dictionary with respective currenti tag
+                spike_train = \
+                    { "current"+str(idx):
+                        all_spike_train.time_slice(spike_start, spike_stop) }
+                # add the dictionary into the dictionary for ramp-up trains
+                ramp_up_spike_train_for.update(spike_train)
             # on the other hand if the stimulation is during ramp-down
             # do the above and add the dictionary inot ramp-down trains
-            for j, x in enumerate(ramp_down_indices):
-                if x in [idx]:
-                    spike_train = \
-                        { "current"+str(j+1):
-                          all_spike_train.time_slice(spike_start, spike_stop) }
-                    ramp_down_spike_train_for.update(spike_train)
-                print j, x
+            elif idx >= ramp_down_indices[0]:
+                spike_train = \
+                    { "current"+str(dwn_idx):
+                        all_spike_train.time_slice(spike_start, spike_stop) }
+                ramp_down_spike_train_for.update(spike_train)
+                dwn_idx += 1
             print ramp_down_indices
         # ============================================================
         # return the dictionaries for both ramp-up and ramp-down phases
