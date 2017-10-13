@@ -148,7 +148,7 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
         ramp_down_indices = \
                 [ k for k in range(ramp_down_stop_idx+1)
                         if k >= ramp_down_start_idx
-                        and k <= ramp_down_start_idx ]
+                        and k <= ramp_down_stop_idx ]
         #all_indices = [k+1 for k in list(range(no_of_Iclamps))]
         #ramp_up_indices = [k+1 for k in list(range(ramp_up_stop_idx))]
         #ramp_down_indices = \
