@@ -152,7 +152,7 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
         ramp_down_indices.reverse()
         # This is done as follows:
         # ============Loop through each current injection==============
-        no_of_I_per_ramp = len(ramp_up_indices) # ramp-up = ramp-down
+        no_of_I_per_ramp = len(ramp_down_indices) # ramp-up = ramp-down
         for i in range(no_of_Iclamps):
             # currentID in self.ramp_up_down_currents start from current1
             idx = i+1
