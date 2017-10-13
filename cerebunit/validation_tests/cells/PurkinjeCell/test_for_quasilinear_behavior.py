@@ -187,6 +187,8 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
                         { "current"+str(j+1):
                           all_spike_train.time_slice(spike_start, spike_stop) }
                     ramp_down_spike_train_for.update(spike_train)
+                print j, x
+            print ramp_down_indices
         # ============================================================
         # return the dictionaries for both ramp-up and ramp-down phases
         return ramp_up_spike_train_for, ramp_down_spike_train_for
