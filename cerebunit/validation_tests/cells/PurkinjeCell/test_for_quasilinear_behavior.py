@@ -175,7 +175,7 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
                 ramp_down_idx += 1
         # ============================================================
         # return the dictionaries for both ramp-up and ramp-down phases
-        return ramp_up_spike_train_for, ramp_up_spike_train_for
+        return ramp_up_spike_train_for, ramp_down_spike_train_for
 
     def get_prediction_for_each_current(self, ramp_spike_train):
         '''
