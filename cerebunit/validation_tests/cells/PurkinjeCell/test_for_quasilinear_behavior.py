@@ -179,9 +179,9 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
             # on the other hand if the stimulation is during ramp-down
             # do the above and add the dictionary inot ramp-down trains
             elif idx in ramp_down_indices:
-                dwn_idx = ramp_down_indices.index(idx)
+                dwn_idx = ramp_down_indices.index(idx)+1
                 spike_train = \
-                    { "current"+str(dwn_idx):
+                    { "current"+str(dwn_idx): # 0 is reserved for no injection
                         all_spike_train.time_slice(spike_start, spike_stop) }
                 ramp_down_spike_train_for.update(spike_train)
             print ramp_down_indices
