@@ -210,7 +210,6 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
             x = mfr(spike_array)
             y = {current_id: {"mean_freq": x.rescale(pq.Hz).item()} } # just the magnitude
             ramp_mean_spike_freq.update(y)
-        print ramp_mean_spike_freq
         return ramp_mean_spike_freq
 #
 #
@@ -241,6 +240,8 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
                 self.get_prediction_for_each_current(ramp_down_spike_train)
         # For both Ramp-Up and Ramp-Down
         # Return the mean firing rates (respective currents)
+        print ramp_up_spike_train, ramp_down_spike_train
+        print ramp_up_mean_spike_freq, ramp_down_mean_spike_freq
         return ramp_up_mean_spike_freq, ramp_down_mean_spike_freq
 #
 #
@@ -278,21 +279,17 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
                 step_down_freq = \
                     "stepDown = "+str(a_prediction["mean_freq"])+" Hz"
                 if current_id=="current0":
-                    score_detail = \
-                            { current_id:
-                                ["0 nA",
-                                 step_up_freq,
-                                 step_down_freq,
-                                 y] }
+                    score_detail = { current_id: [ "0 nA",
+                                                   step_up_freq,
+                                                   step_down_freq,
+                                                   y ] }
                 else:
                     amp = \
                      self.ramp_up_down_currents[current_id]["amp"]
-                    score_detail = \
-                            { current_id:
-                                [str(amp)+" nA",
-                                 step_up_freq,
-                                 step_down_freq,
-                                 y] }
+                    score_detail = { current_id: [ str(amp)+" nA",
+                                                   step_up_freq,
+                                                   step_down_freq,
+                                                   y ] }
                 # For the respective current id
                 # Store the score breakdown in the dictionary
                 score_breakdown.update(score_detail)
