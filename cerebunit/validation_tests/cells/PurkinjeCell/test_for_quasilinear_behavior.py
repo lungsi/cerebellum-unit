@@ -157,7 +157,6 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
         # This is done as follows:
         # ============Loop through each current injection==============
         no_of_I_per_ramp = len(ramp_up_indices) # ramp-up = ramp-down
-        dwn_idx = 1
         for i in range(no_of_Iclamps):
             # currentID in self.ramp_up_down_currents start from current1
             idx = i+1
@@ -169,7 +168,7 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
             spike_stop = spike_start + inj_times["dur"]
             # if the current stimulation is during ramp-up phase
             # i.e idx in ramp_up_indices
-            if idx <= ramp_up_indices[-1]:
+            if idx <= ramp_up_stop_idx:
                 # slice the spike train from total spike train into a
                 # dictionary with respective currenti tag
                 spike_train = \
@@ -179,12 +178,12 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
                 ramp_up_spike_train_for.update(spike_train)
             # on the other hand if the stimulation is during ramp-down
             # do the above and add the dictionary inot ramp-down trains
-            elif idx >= ramp_down_indices[0]:
+            elif idx in ramp_down_indices:
+                dwn_idx = ramp_down_indices.index(idx)
                 spike_train = \
                     { "current"+str(dwn_idx):
                         all_spike_train.time_slice(spike_start, spike_stop) }
                 ramp_down_spike_train_for.update(spike_train)
-                dwn_idx += 1
             print ramp_down_indices
         # ============================================================
         # return the dictionaries for both ramp-up and ramp-down phases
