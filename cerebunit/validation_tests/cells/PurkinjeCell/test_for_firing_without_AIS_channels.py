@@ -48,7 +48,10 @@ class NoChannelsAISTest(sciunit.Test, BinaryScore):
         '''
         setup_parameters = { "dt": 0.025,   "celsius": 37,
                              "tstop": 1000, "v_init": -65 }
-        model.ko_AIS_channels()
+        #model.ko_AIS_channels()
+        model.axonAIS.pcabar_Cav3_1 = 0
+        model.axonAIS.gbar_Nav1_6 = 0
+        model.axonAIS.pcabar_Cav2_1 = 0
         model.set_simulation_properties(setup_parameters)
         model.produce_spike_train()
         return model
