@@ -131,19 +131,22 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
             # so the middle current is the last current in ramp-up
             ramp_up_stop_idx = no_of_Iclamps / 2
             # so ramp-down current starts from ramp-up last current + 1
-            # ramp_down_start_idx = ramp_up_stop_idx + 1
+            #ramp_down_start_idx = ramp_up_stop_idx + 1
         else:
             # the largest current is the middle of ramp-up & ramp-down
             # so the last ramp-up current is the one before the largest
             ramp_up_stop_idx = (no_of_Iclamps - 1) / 2
             # so ramp-down current starts from ramp-up last current + 1
-            # ramp_down_start_idx = ramp_up_stop_idx + 2
+            #ramp_down_start_idx = ramp_up_stop_idx + 2
         ramp_down_stop_idx = no_of_Iclamps # last current is currentN
         # this is the last current id in the overall current injection
         #
         # create list of current indices from current1 for both ramps
+        all_indices = [k+1 for k in list(range(no_of_Iclamps))]
         ramp_up_indices = [k+1 for k in list(range(ramp_up_stop_idx))]
-        ramp_down_indices = [k+1 for k in list(range(ramp_down_stop_idx))]
+        ramp_down_indices = \
+                [ k for i, k in enumerate(all_indices)
+                        if k not in ramp_up_indices ]
         #
         ramp_up_idx = 1   # first current injection is current1
         ramp_down_idx = 1 # first current injection is current1
@@ -153,14 +156,16 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
         # This is done as follows:
         # ============Loop through each current injection==============
         for i in range(no_of_Iclamps):
+            # currentID in self.ramp_up_down_currents start from current1
+            idx = i+1
             # get current stimulation parameters for currenti
-            inj_times = self.ramp_up_down_currents["current"+str(i+1)]
+            inj_times = self.ramp_up_down_currents["current"+str(idx)]
             # lower bound of the time boundary
             spike_start = inj_times["delay"]
             # upper bound of the time boundary
             spike_stop = spike_start + inj_times["dur"]
             # if the current stimulation is during ramp-up phase
-            if (i+1) in ramp_up_indices:
+            if idx in ramp_up_indices:
                 # slice the spike train from total spike train into a
                 # dictionary with respective currenti tag
                 spike_train = \
@@ -171,7 +176,7 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
                 ramp_up_idx += 1
             # on the other hand if the stimulation is during ramp-down
             # do the above and add the dictionary inot ramp-down trains
-            elif (i+1) in ramp_down_indices:
+            elif idx in ramp_down_indices:
                 spike_train = \
                         { "current"+str(ramp_down_idx):
                           all_spike_train.time_slice(spike_start, spike_stop) }
