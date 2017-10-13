@@ -124,7 +124,8 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
         # ==========Setup indices for Ramp-Up and Ramp-Down============
         # total number of injections
         no_of_Iclamps = len(self.ramp_up_down_currents)
-        # ramp_up_start_idx = 1 # first current is current1
+        ramp_up_start_idx = 1 # first current is current1
+        ramp_down_stop_idx = no_of_Iclamps # last current is currentN
         if no_of_Iclamps % 2 == 0:
             # there is no largest current in the middle of ramp-up/down
             # that is, all the currents are repeated in ramp-down
@@ -138,8 +139,6 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
             ramp_up_stop_idx = (no_of_Iclamps - 1) / 2
             # so ramp-down current starts from ramp-up last current + 1
             ramp_down_start_idx = ramp_up_stop_idx + 2
-        ramp_down_stop_idx = no_of_Iclamps # last current is currentN
-        # this is the last current id in the overall current injection
         #
         # create list of current indices from current1 for both ramps
         ramp_up_indices = \
