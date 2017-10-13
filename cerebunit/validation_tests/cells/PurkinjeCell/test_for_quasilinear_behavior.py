@@ -149,14 +149,9 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
                 [ k for k in range(ramp_down_stop_idx+1)
                         if k >= ramp_down_start_idx
                         and k <= ramp_down_stop_idx ]
-        #all_indices = [k+1 for k in list(range(no_of_Iclamps))]
-        #ramp_up_indices = [k+1 for k in list(range(ramp_up_stop_idx))]
-        #ramp_down_indices = \
-        #        [ k for i, k in enumerate(all_indices)
-        #                if k not in ramp_up_indices ]
         #
-        ramp_up_idx = 1   # first current injection is current1
-        ramp_down_idx = 1 # first current injection is current1
+        #ramp_up_idx = 1   # first current injection is current1
+        #ramp_down_idx = 1 # first current injection is current1
         #
         # Note: ramp_down_stop_idx is not the last currentID in ramp-down
         # The last currentID in ramp-up = last currentID in ramp-down
@@ -176,19 +171,19 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
                 # slice the spike train from total spike train into a
                 # dictionary with respective currenti tag
                 spike_train = \
-                        { "current"+str(ramp_up_idx):
+                        { "current"+str(idx):
                           all_spike_train.time_slice(spike_start, spike_stop) }
                 # add the dictionary into the dictionary for ramp-up trains
                 ramp_up_spike_train_for.update(spike_train)
-                ramp_up_idx += 1
+                #ramp_up_idx += 1
             # on the other hand if the stimulation is during ramp-down
             # do the above and add the dictionary inot ramp-down trains
             elif idx in ramp_down_indices:
                 spike_train = \
-                        { "current"+str(ramp_down_idx):
+                        { "current"+str(idx):
                           all_spike_train.time_slice(spike_start, spike_stop) }
                 ramp_down_spike_train_for.update(spike_train)
-                ramp_down_idx += 1
+                #ramp_down_idx += 1
         # ============================================================
         # return the dictionaries for both ramp-up and ramp-down phases
         print ramp_up_indices, ramp_down_indices, self.ramp_up_down_currents
