@@ -5,15 +5,15 @@
 # modified 09 October 2017 Lungsi
 #
 # ============================================================================
-
+#
 import sciunit
 import quantities as pq
 from elephant.statistics import mean_firing_rate as mfr
-
+#
 from cerebunit.capabilities.cells.response import ProducesSpikeTrain
 from cerebunit.score_manager import BinaryScore, OverallBinaryScore
-
-
+#
+#
 class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
     '''
     The QuasiLinear Test is a test where the model is injected with currents.
@@ -25,7 +25,8 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
     '''
     required_capabilities = (ProducesSpikeTrain,)
     score_type = OverallBinaryScore
-    #
+#
+#
     def generate_prediction(self, model, verbose=False):
         '''
         Generates spike train from "vm_soma", cell region.
@@ -35,26 +36,26 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
         '''
         # ============Ramp Up and then Down Step Currents (nA)==============
         self.ramp_up_down_currents = \
-                { #"current1": {"amp": 0.2, "dur": 100.0, "delay": 100.0},
-                  #"current2": {"amp": 0.4, "dur": 100.0, "delay": 200.0},
-                  #"current3": {"amp": 0.5, "dur": 100.0, "delay": 300.0},
-                  #"current4": {"amp": 0.4, "dur": 100.0, "delay": 400.0},
-                  #"current5": {"amp": 0.2, "dur": 100.0, "delay": 500.0},
-                  "current1": {"amp": 0.2, "dur": 1000.0, "delay": 1000.0},
-                  "current2": {"amp": 0.4, "dur": 1000.0, "delay": 2000.0},
-                  "current3": {"amp": 0.6, "dur": 1000.0, "delay": 3000.0},
-                  "current4": {"amp": 0.8, "dur": 1000.0, "delay": 4000.0},
-                  "current5": {"amp": 1.0, "dur": 1000.0, "delay": 5000.0},
-                  "current6": {"amp": 1.2, "dur": 1000.0, "delay": 6000.0},
-                  "current7": {"amp": 1.4, "dur": 1000.0, "delay": 7000.0},
-                  "current8": {"amp": 1.6, "dur": 1000.0, "delay": 8000.0},
-                  "current9": {"amp": 1.4, "dur": 1000.0, "delay": 9000.0},
-                  "current10": {"amp": 1.2, "dur": 1000.0, "delay": 10000.0},
-                  "current11": {"amp": 1.0, "dur": 1000.0, "delay": 11000.0},
-                  "current12": {"amp": 0.8, "dur": 1000.0, "delay": 12000.0},
-                  "current13": {"amp": 0.6, "dur": 1000.0, "delay": 13000.0},
-                  "current14": {"amp": 0.4, "dur": 1000.0, "delay": 14000.0},
-                  "current15": {"amp": 0.2, "dur": 1000.0, "delay": 15000.0}
+                { "current1": {"amp": 0.2, "dur": 100.0, "delay": 100.0},
+                  "current2": {"amp": 0.4, "dur": 100.0, "delay": 200.0},
+                  "current3": {"amp": 0.5, "dur": 100.0, "delay": 300.0},
+                  "current4": {"amp": 0.4, "dur": 100.0, "delay": 400.0},
+                  "current5": {"amp": 0.2, "dur": 100.0, "delay": 500.0},
+                  #"current1": {"amp": 0.2, "dur": 1000.0, "delay": 1000.0},
+                  #"current2": {"amp": 0.4, "dur": 1000.0, "delay": 2000.0},
+                  #"current3": {"amp": 0.6, "dur": 1000.0, "delay": 3000.0},
+                  #"current4": {"amp": 0.8, "dur": 1000.0, "delay": 4000.0},
+                  #"current5": {"amp": 1.0, "dur": 1000.0, "delay": 5000.0},
+                  #"current6": {"amp": 1.2, "dur": 1000.0, "delay": 6000.0},
+                  #"current7": {"amp": 1.4, "dur": 1000.0, "delay": 7000.0},
+                  #"current8": {"amp": 1.6, "dur": 1000.0, "delay": 8000.0},
+                  #"current9": {"amp": 1.4, "dur": 1000.0, "delay": 9000.0},
+                  #"current10": {"amp": 1.2, "dur": 1000.0, "delay": 10000.0},
+                  #"current11": {"amp": 1.0, "dur": 1000.0, "delay": 11000.0},
+                  #"current12": {"amp": 0.8, "dur": 1000.0, "delay": 12000.0},
+                  #"current13": {"amp": 0.6, "dur": 1000.0, "delay": 13000.0},
+                  #"current14": {"amp": 0.4, "dur": 1000.0, "delay": 14000.0},
+                  #"current15": {"amp": 0.2, "dur": 1000.0, "delay": 15000.0}
                 }
         stimulus = \
                 model.set_stimulation_properties( self.ramp_up_down_currents )
@@ -63,13 +64,14 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
                 for i in range(len(stimulus)) ]
         # =============================================================
         self.setup_parameters = { "dt": 0.025,   "celsius": 37,
-                                  "tstop": 17000, "v_init": -65 }
-                                  #"tstop": 600, "v_init": -65 }
+                                  #"tstop": 17000, "v_init": -65 }
+                                  "tstop": 600, "v_init": -65 }
         model.set_simulation_properties(self.setup_parameters)
         # =============================================================
         model.produce_spike_train()
         return model
-
+#
+#
     def get_spike_train_for_each_current(self, model):
         '''
         The model.produce_spike_train() results in spike train for all
@@ -166,42 +168,30 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
             spike_start = inj_times["delay"]
             # upper bound of the time boundary
             spike_stop = spike_start + inj_times["dur"]
+            # if the current stimulation is during ramp-up phase
+            # i.e idx in ramp_up_indices
             for j, x in enumerate(ramp_up_indices):
                 if x in [idx]:
+                    # slice the spike train from total spike train into a
+                    # dictionary with respective currenti tag
                     spike_train = \
                         { "current"+str(j+1):
                           all_spike_train.time_slice(spike_start, spike_stop) }
+                    # add the dictionary into the dictionary for ramp-up trains
                     ramp_up_spike_train_for.update(spike_train)
+            # on the other hand if the stimulation is during ramp-down
+            # do the above and add the dictionary inot ramp-down trains
             for j, x in enumerate(ramp_down_indices):
                 if x in [idx]:
                     spike_train = \
                         { "current"+str(j+1):
                           all_spike_train.time_slice(spike_start, spike_stop) }
                     ramp_down_spike_train_for.update(spike_train)
-            # if the current stimulation is during ramp-up phase
-            #if idx in ramp_up_indices:
-                # slice the spike train from total spike train into a
-                # dictionary with respective currenti tag
-            #    spike_train = \
-            #            { "current"+str(idx):
-            #              all_spike_train.time_slice(spike_start, spike_stop) }
-                # add the dictionary into the dictionary for ramp-up trains
-            #    ramp_up_spike_train_for.update(spike_train)
-                #ramp_up_idx += 1
-            # on the other hand if the stimulation is during ramp-down
-            # do the above and add the dictionary inot ramp-down trains
-            #elif idx in ramp_down_indices:
-            #    spike_train = \
-            #            { "current"+str(idx):
-            #              all_spike_train.time_slice(spike_start, spike_stop) }
-            #    ramp_down_spike_train_for.update(spike_train)
-                #ramp_down_idx += 1
         # ============================================================
         # return the dictionaries for both ramp-up and ramp-down phases
-        print ramp_up_indices, ramp_down_indices, self.ramp_up_down_currents
-        print ramp_up_spike_train_for, ramp_down_spike_train_for
         return ramp_up_spike_train_for, ramp_down_spike_train_for
-
+#
+#
     def get_prediction_for_each_current(self, ramp_spike_train):
         '''
         For a given ramp (up or down) dictionary of spike trains tagged
@@ -222,7 +212,8 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
             ramp_mean_spike_freq.update(y)
         print ramp_mean_spike_freq
         return ramp_mean_spike_freq
-
+#
+#
     def process_prediction(self, model):
         '''
         Once the model has run, this function can be used to process the
@@ -251,7 +242,8 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
         # For both Ramp-Up and Ramp-Down
         # Return the mean firing rates (respective currents)
         return ramp_up_mean_spike_freq, ramp_down_mean_spike_freq
-
+#
+#
     def compute_score(self, observation, model, verbose=False):
         '''
         This function is like generate_prediction. It is therefore
