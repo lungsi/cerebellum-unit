@@ -142,10 +142,6 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
             ramp_down_start_idx = ramp_up_stop_idx + 2
         #
         # create list of current indices from current1 for both ramps
-        ramp_up_indices = \
-                [ k for k in range(ramp_up_stop_idx+1)
-                        if k >= ramp_up_start_idx
-                        and k <= ramp_up_stop_idx ]
         ramp_down_indices = \
                 [ k for k in range(ramp_down_stop_idx+1)
                         if k >= ramp_down_start_idx
@@ -263,7 +259,7 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
             raw_observation = ramp_up_mean_spike_freq_for[current_id]
             observation = \
                     { "inequality":
-                            "> " + str(raw_observation["mean_freq"]) }
+                            "!= " + str(raw_observation["mean_freq"]) }
             # if this current id is also in ramp down phase
             if current_id in ramp_down_mean_spike_freq_for.keys():
                 # take corresponding freq at ramp down as prediction
@@ -297,7 +293,7 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
         x2 = OverallBinaryScore.compute( list_of_scores, score_breakdown )
         score = OverallBinaryScore(x2)
         if score.score==1:
-            score.description = "The model " + model.name + " passed the " + self.__class__.__name__ + ". The mean spike frequencies of a given amplitude of injection during ramp-up phase is greater than those during ramp-down phase."
+            score.description = "The model " + model.name + " passed the " + self.__class__.__name__ + ". The mean spike frequencies of a given amplitude of injection during ramp-up phase is different from those during ramp-down phase."
         else:
             score.description = "The model " + model.name + " failed the " + self.__class__.__name__ + ". The mean spike frequencies of an (or many) amplitude of injection are similar for ramp-up phase versus ramp-down phase."
         print score.description
