@@ -66,9 +66,6 @@ class BinaryScore(sciunit.Score):
                     else:
                         raise ValueError("The inequality value must be of the form; > number or < number")
                 else:
-                    print measurement[key]
-                    print epsilon
-                    print measurement[key]-epsilon
                     amount = measurement[key]
                     if type(amount) is pq.quantity.Quantity:
                         amount = amount.item()
