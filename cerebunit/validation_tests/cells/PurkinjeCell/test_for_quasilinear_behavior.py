@@ -35,11 +35,11 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
         '''
         # ============Ramp Up and then Down Step Currents (nA)==============
         self.ramp_up_down_currents = \
-                { "current1": {"amp": 0.2, "dur": 1000.0, "delay": 1000.0},
-                  "current2": {"amp": 0.4, "dur": 1000.0, "delay": 2000.0},
-                  "current3": {"amp": 0.5, "dur": 1000.0, "delay": 3000.0},
-                  "current4": {"amp": 0.4, "dur": 1000.0, "delay": 4000.0},
-                  "current5": {"amp": 0.2, "dur": 1000.0, "delay": 5000.0},
+                { "current1": {"amp": 0.2, "dur": 100.0, "delay": 100.0},
+                  "current2": {"amp": 0.4, "dur": 100.0, "delay": 200.0},
+                  "current3": {"amp": 0.5, "dur": 100.0, "delay": 300.0},
+                  "current4": {"amp": 0.4, "dur": 100.0, "delay": 400.0},
+                  "current5": {"amp": 0.2, "dur": 100.0, "delay": 500.0},
                   #"current1": {"amp": 0.2, "dur": 1000.0, "delay": 1000.0},
                   #"current2": {"amp": 0.4, "dur": 1000.0, "delay": 2000.0},
                   #"current3": {"amp": 0.6, "dur": 1000.0, "delay": 3000.0},
@@ -65,7 +65,7 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
         # =============================================================
         self.setup_parameters = { "dt": 0.025,   "celsius": 37,
                                   #"tstop": 17000, "v_init": -65 }
-                                  "tstop": 6000, "v_init": -65 }
+                                  "tstop": 600, "v_init": -65 }
         model.set_simulation_properties(self.setup_parameters)
         # =============================================================
         model.produce_spike_train()
@@ -208,6 +208,7 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
             x = mfr(spike_array)
             y = {current_id: {"mean_freq": x.rescale(pq.Hz).item()} } # just the magnitude
             ramp_mean_spike_freq.update(y)
+        print ramp_mean_spike_freq
         return ramp_mean_spike_freq
 
     def process_prediction(self, model):
