@@ -131,22 +131,30 @@ class QuasiLinearTest(sciunit.Test, BinaryScore, OverallBinaryScore):
             # so the middle current is the last current in ramp-up
             ramp_up_stop_idx = no_of_Iclamps / 2
             # so ramp-down current starts from ramp-up last current + 1
-            #ramp_down_start_idx = ramp_up_stop_idx + 1
+            ramp_down_start_idx = ramp_up_stop_idx + 1
         else:
             # the largest current is the middle of ramp-up & ramp-down
             # so the last ramp-up current is the one before the largest
             ramp_up_stop_idx = (no_of_Iclamps - 1) / 2
             # so ramp-down current starts from ramp-up last current + 1
-            #ramp_down_start_idx = ramp_up_stop_idx + 2
+            ramp_down_start_idx = ramp_up_stop_idx + 2
         ramp_down_stop_idx = no_of_Iclamps # last current is currentN
         # this is the last current id in the overall current injection
         #
         # create list of current indices from current1 for both ramps
-        all_indices = [k+1 for k in list(range(no_of_Iclamps))]
-        ramp_up_indices = [k+1 for k in list(range(ramp_up_stop_idx))]
+        ramp_up_indices = \
+                [ k for k in range(ramp_up_stop_idx+1)
+                        if k >= ramp_up_start_idx
+                        and k <= ramp_up_stop_idx ]
         ramp_down_indices = \
-                [ k for i, k in enumerate(all_indices)
-                        if k not in ramp_up_indices ]
+                [ k for k in range(ramp_down_stop_idx+1)
+                        if k >= ramp_down_start_idx
+                        and k <= ramp_down_start_idx ]
+        #all_indices = [k+1 for k in list(range(no_of_Iclamps))]
+        #ramp_up_indices = [k+1 for k in list(range(ramp_up_stop_idx))]
+        #ramp_down_indices = \
+        #        [ k for i, k in enumerate(all_indices)
+        #                if k not in ramp_up_indices ]
         #
         ramp_up_idx = 1   # first current injection is current1
         ramp_down_idx = 1 # first current injection is current1
