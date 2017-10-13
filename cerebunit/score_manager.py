@@ -9,7 +9,7 @@
 # ============================================================================
 
 import sciunit
-
+import quantities as pq
 
 # ==========================BinaryScore=======================================
 # created  21 September 2017 Lungsi
@@ -69,8 +69,13 @@ class BinaryScore(sciunit.Score):
                     print measurement[key]
                     print epsilon
                     print measurement[key]-epsilon
-                    if measurement[key]-epsilon <= prediction \
-                            <= measurement[key]+epsilon:
+                    amount = measurement[key]
+                    if type(amount) is pq.quantity.Quantity:
+                        amount = amount.item()
+                    else:
+                        amount = float(amount)
+                    # Then
+                    if amount-epsilon <= prediction <= amount+epsilon:
                         self.score = 1
                     else:
                         self.score = 0
