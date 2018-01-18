@@ -7,7 +7,7 @@
 # ============================================================================
 
 import os
-
+from math import sqrt
 import sciunit
 import quantities as pq
 from elephant.statistics import mean_firing_rate as mfr
@@ -74,7 +74,23 @@ class SpontaneousFiringTest(sciunit.Test):
         Not exactly this function but a version of this is already
         performed by the ValidationTestLibrary.get_validation_test
         '''
-        pass
+        if "mean" not in observation:
+            raise sciunit.ObservationError
+        if "error" in observation:
+            pass
+        elif "standard error" in observation and "n" in observation:
+            # calculate standard deviation from standard error and number of observations
+            self.observation = {
+                "mean": observation["mean"],
+                "error": observation["standard error"] * sqrt(observation["n"])
+            }
+        else:
+            raise sciunit.ObservationError
+        if "units" in observation:
+            self.observation["mean"] = pq.Quantity(self.observation["mean"],
+                                                   units=observation["units"])
+            self.observation["error"] = pq.Quantity(self.observation["error"],
+                                                    units=observation["units"])
 
     def compute_score(self, observation, model, verbose=False):
         '''
