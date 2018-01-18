@@ -81,5 +81,5 @@ class NoChannelsAISTest(sciunit.Test, BinaryScore):
         x = BinaryScore.compute( observation, a_prediction )
         score = BinaryScore(x)
         score.description = "The " + self.__class__.__name__  + " results in the prediction by the " + model.name  + " to be " + str(processed_prediction) + " which means that the " + str(score)
-        print score.description
+        print(score.description)
         return score
