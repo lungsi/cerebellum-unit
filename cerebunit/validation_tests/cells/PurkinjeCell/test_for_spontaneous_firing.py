@@ -12,6 +12,8 @@ import sciunit
 import quantities as pq
 from elephant.statistics import mean_firing_rate as mfr
 
+from neuron import h
+
 from cerebunit.file_manager import get_folder_path_and_name as gfpan
 from cerebunit.score_manager import BinaryScore
 from cerebunit.capabilities.cells.response import ProducesSpikeTrain
