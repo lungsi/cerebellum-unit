@@ -44,13 +44,21 @@ class SpontaneousFiringTest(sciunit.Test):
         # this is not needed for running the test multiple times
         # but if you are running the model in an interpreter and then the test
         # resetting the model is essential
-        model.reset()
+        #model.reset()
+        #
+        print("generate prediction...")
+        print ("size of rec_t is "+ str(model.cell.rec_t.size()) +
+               " and its current value is "+ str(h._ref_t[0]))
+        print ("size of vm_soma is "+ str(model.cell.vm_soma.size()) +
+               " and its current value is "+ str(model.cell.soma(0.5)._ref_v[0]))
+        print ("size of vm_NOR3 is "+ str(model.cell.vm_NOR3.size()) +
+               " and its current value is "+ str(model.cell.axonNOR3(0.5)._ref_v[0]))
         #
         setup_parameters = { "dt": 0.025,   "celsius": 37,
                              "tstop": 1000, "v_init": -65 }
         model.cell_regions = {"vm_soma": 0.0}
         model.set_simulation_properties(setup_parameters)
-        model.reset()
+        #model.reset()
         model.produce_spike_train()
         #self.process_prediction(model)
         return model
@@ -62,6 +70,13 @@ class SpontaneousFiringTest(sciunit.Test):
         prediction of interest, mean firing rate.
         Prediction of interest implies all the listed cell_regions
         '''
+        print("process prediction...")
+        print ("size of rec_t is "+ str(model.cell.rec_t.size()) +
+               " and its current value is "+ str(h._ref_t[0]))
+        print ("size of vm_soma is "+ str(model.cell.vm_soma.size()) +
+               " and its current value is "+ str(model.cell.soma(0.5)._ref_v[0]))
+        print ("size of vm_NOR3 is "+ str(model.cell.vm_NOR3.size()) +
+               " and its current value is "+ str(model.cell.axonNOR3(0.5)._ref_v[0]))
         model_mean_firing_rates = {}
         for cell_region in model.cell_regions:
             x = mfr(model.predictions["spike_train"][cell_region])
@@ -80,6 +95,7 @@ class SpontaneousFiringTest(sciunit.Test):
         Not exactly this function but a version of this is already
         performed by the ValidationTestLibrary.get_validation_test
         '''
+        print("validate observation...")
         if "mean" not in observation:
             raise sciunit.ObservationError
         if "error" in observation:
@@ -110,6 +126,13 @@ class SpontaneousFiringTest(sciunit.Test):
         the experimental_data to get the binary score; 0 if the
         prediction correspond with experiment, else 1.
         '''
+        print("compute score...")
+        print ("size of rec_t is "+ str(model.cell.rec_t.size()) +
+               " and its current value is "+ str(h._ref_t[0]))
+        print ("size of vm_soma is "+ str(model.cell.vm_soma.size()) +
+               " and its current value is "+ str(model.cell.soma(0.5)._ref_v[0]))
+        print ("size of vm_NOR3 is "+ str(model.cell.vm_NOR3.size()) +
+               " and its current value is "+ str(model.cell.axonNOR3(0.5)._ref_v[0]))
         processed_prediction = self.process_prediction(model)
         a_prediction = processed_prediction["vm_soma"][1]
         #a_prediction = self.processed_prediction["vm_soma"][1]
