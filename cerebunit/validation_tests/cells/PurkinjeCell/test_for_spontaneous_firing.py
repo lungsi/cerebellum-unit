@@ -41,6 +41,11 @@ class SpontaneousFiringTest(sciunit.Test):
         Therefore as part of sciunit generate_prediction is
         mandatory.
         '''
+        # this is not needed for running the test multiple times
+        # but if you are running the model in an interpreter and then the test
+        # resetting the model is essential
+        model.reset()
+        #
         setup_parameters = { "dt": 0.025,   "celsius": 37,
                              "tstop": 1000, "v_init": -65 }
         model.cell_regions = {"vm_soma": 0.0}
