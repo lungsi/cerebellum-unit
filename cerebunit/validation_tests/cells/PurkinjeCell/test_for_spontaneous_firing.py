@@ -50,6 +50,7 @@ class SpontaneousFiringTest(sciunit.Test):
                              "tstop": 1000, "v_init": -65 }
         model.cell_regions = {"vm_soma": 0.0}
         model.set_simulation_properties(setup_parameters)
+        model.reset()
         model.produce_spike_train()
         #self.process_prediction(model)
         return model
