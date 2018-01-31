@@ -60,8 +60,20 @@ class SpontaneousFiringTest(sciunit.Test):
                              "tstop": 1000, "v_init": -65 }
         model.cell_regions = {"vm_soma": 0.0}
         model.set_simulation_properties(setup_parameters)
-        #model.reset()
+        model.reset()
+        print ("size of rec_t is "+ str(model.cell.rec_t.size()) +
+               " and its current value is "+ str(h._ref_t[0]))
+        print ("size of vm_soma is "+ str(model.cell.vm_soma.size()) +
+               " and its current value is "+ str(model.cell.soma(0.5)._ref_v[0]))
+        print ("size of vm_NOR3 is "+ str(model.cell.vm_NOR3.size()) +
+               " and its current value is "+ str(model.cell.axonNOR3(0.5)._ref_v[0]))
         model.produce_spike_train()
+        print ("size of rec_t is "+ str(model.cell.rec_t.size()) +
+               " and its current value is "+ str(h._ref_t[0]))
+        print ("size of vm_soma is "+ str(model.cell.vm_soma.size()) +
+               " and its current value is "+ str(model.cell.soma(0.5)._ref_v[0]))
+        print ("size of vm_NOR3 is "+ str(model.cell.vm_NOR3.size()) +
+               " and its current value is "+ str(model.cell.axonNOR3(0.5)._ref_v[0]))
         #self.process_prediction(model)
         return model
 
