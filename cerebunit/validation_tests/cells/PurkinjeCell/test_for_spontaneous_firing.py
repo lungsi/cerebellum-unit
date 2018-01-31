@@ -85,12 +85,6 @@ class SpontaneousFiringTest(sciunit.Test):
         Prediction of interest implies all the listed cell_regions
         '''
         print("process prediction...")
-        print ("size of rec_t is "+ str(model.cell.rec_t.size()) +
-               " and its current value is "+ str(h._ref_t[0]))
-        print ("size of vm_soma is "+ str(model.cell.vm_soma.size()) +
-               " and its current value is "+ str(model.cell.soma(0.5)._ref_v[0]))
-        print ("size of vm_NOR3 is "+ str(model.cell.vm_NOR3.size()) +
-               " and its current value is "+ str(model.cell.axonNOR3(0.5)._ref_v[0]))
         model_mean_firing_rates = {}
         for cell_region in model.cell_regions:
             x = mfr(model.predictions["spike_train"][cell_region])
@@ -141,12 +135,6 @@ class SpontaneousFiringTest(sciunit.Test):
         prediction correspond with experiment, else 1.
         '''
         print("compute score...")
-        print ("size of rec_t is "+ str(model.cell.rec_t.size()) +
-               " and its current value is "+ str(h._ref_t[0]))
-        print ("size of vm_soma is "+ str(model.cell.vm_soma.size()) +
-               " and its current value is "+ str(model.cell.soma(0.5)._ref_v[0]))
-        print ("size of vm_NOR3 is "+ str(model.cell.vm_NOR3.size()) +
-               " and its current value is "+ str(model.cell.axonNOR3(0.5)._ref_v[0]))
         processed_prediction = self.process_prediction(model)
         a_prediction = processed_prediction["vm_soma"][1]
         #a_prediction = self.processed_prediction["vm_soma"][1]
