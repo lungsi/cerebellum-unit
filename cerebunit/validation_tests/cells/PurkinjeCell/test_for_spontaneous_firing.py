@@ -55,6 +55,7 @@ class SpontaneousFiringTest(sciunit.Test):
                " and its current value is "+ str(model.cell.soma(0.5)._ref_v[0]))
         print ("size of vm_NOR3 is "+ str(model.cell.vm_NOR3.size()) +
                " and its current value is "+ str(model.cell.axonNOR3(0.5)._ref_v[0]))
+        print(h.t, h.dt, h.tstop, h.v_init)
         #
         setup_parameters = { "dt": 0.025,   "celsius": 37,
                              "tstop": 1000, "v_init": -65 }
@@ -74,6 +75,7 @@ class SpontaneousFiringTest(sciunit.Test):
                " and its current value is "+ str(model.cell.soma(0.5)._ref_v[0]))
         print ("size of vm_NOR3 is "+ str(model.cell.vm_NOR3.size()) +
                " and its current value is "+ str(model.cell.axonNOR3(0.5)._ref_v[0]))
+        print(h.t, h.dt, h.tstop, h.v_init)
         #self.process_prediction(model)
         return model
 
