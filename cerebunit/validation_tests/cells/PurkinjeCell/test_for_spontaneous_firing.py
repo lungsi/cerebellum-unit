@@ -143,13 +143,14 @@ class SpontaneousFiringTest(sciunit.Test):
         #x = BinaryScore.compute( observation,
         #                         a_prediction  )
         #score = BinaryScore(x)
-        #score.description = "The spontaneous firing test defined by the mean firing rate of the model = " + str(a_prediction) + " compared against the observed experimental data " + str(observation) + " whose " + str(score)
-        #if score.score==1:
-        #    ans = "The model " + model.name + " passed the " + self.__class__.__name__ + ". The mean firing rate of the model = " + str(a_prediction) + " and the validation data is " + str(observation)
-        #else:
-        #    ans = "The model " + model.name + " failed the " + self.__class__.__name__ + ". The mean firing rate of the model = " + str(a_prediction) + " and the validation data is " + str(observation)
-        #print(ans)
-        #return score
+        score = 0
+        score.description = "The spontaneous firing test defined by the mean firing rate of the model = " + str(a_prediction) + " compared against the observed experimental data " + str(observation) + " whose " + str(score)
+        if score.score==1:
+            ans = "The model " + model.name + " passed the " + self.__class__.__name__ + ". The mean firing rate of the model = " + str(a_prediction) + " and the validation data is " + str(observation)
+        else:
+            ans = "The model " + model.name + " failed the " + self.__class__.__name__ + ". The mean firing rate of the model = " + str(a_prediction) + " and the validation data is " + str(observation)
+        print(ans)
+        return score
         #computed_scores = {}
         #for cell_region in model.cell_regions:
         #    a_prediction = self.processed_prediction[cell_region][1]
