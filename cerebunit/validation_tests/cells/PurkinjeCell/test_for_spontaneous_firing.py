@@ -139,7 +139,7 @@ class SpontaneousFiringTest(sciunit.Test):
         print("compute score...")
         processed_prediction = self.process_prediction(model)
         a_prediction = processed_prediction["vm_soma"][1]
-        a_prediction = self.processed_prediction["vm_soma"][1]
+        #a_prediction = self.processed_prediction["vm_soma"][1]
         x = BinaryScore.compute( observation,
                                  a_prediction  )
         score = BinaryScore(x)
