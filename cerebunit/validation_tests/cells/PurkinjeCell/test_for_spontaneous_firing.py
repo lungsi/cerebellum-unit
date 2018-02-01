@@ -137,13 +137,12 @@ class SpontaneousFiringTest(sciunit.Test):
         prediction correspond with experiment, else 1.
         '''
         print("compute score...")
-        #processed_prediction = self.process_prediction(model)
-        #a_prediction = processed_prediction["vm_soma"][1]
-        #a_prediction = self.processed_prediction["vm_soma"][1]
-        #x = BinaryScore.compute( observation,
-        #                         a_prediction  )
-        #score = BinaryScore(x)
-        score.score = 0
+        processed_prediction = self.process_prediction(model)
+        a_prediction = processed_prediction["vm_soma"][1]
+        a_prediction = self.processed_prediction["vm_soma"][1]
+        x = BinaryScore.compute( observation,
+                                 a_prediction  )
+        score = BinaryScore(x)
         score.description = "The spontaneous firing test defined by the mean firing rate of the model = " + str(a_prediction) + " compared against the observed experimental data " + str(observation) + " whose " + str(score)
         if score.score==1:
             ans = "The model " + model.name + " passed the " + self.__class__.__name__ + ". The mean firing rate of the model = " + str(a_prediction) + " and the validation data is " + str(observation)
