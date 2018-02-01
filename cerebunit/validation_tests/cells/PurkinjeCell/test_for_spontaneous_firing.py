@@ -143,7 +143,7 @@ class SpontaneousFiringTest(sciunit.Test):
         #x = BinaryScore.compute( observation,
         #                         a_prediction  )
         #score = BinaryScore(x)
-        score = 0
+        score.score = 0
         score.description = "The spontaneous firing test defined by the mean firing rate of the model = " + str(a_prediction) + " compared against the observed experimental data " + str(observation) + " whose " + str(score)
         if score.score==1:
             ans = "The model " + model.name + " passed the " + self.__class__.__name__ + ". The mean firing rate of the model = " + str(a_prediction) + " and the validation data is " + str(observation)
