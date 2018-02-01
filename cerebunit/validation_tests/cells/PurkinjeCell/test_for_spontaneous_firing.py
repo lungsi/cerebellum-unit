@@ -60,7 +60,7 @@ class SpontaneousFiringTest(sciunit.Test):
         setup_parameters = { "dt": 0.025,   "celsius": 37,
                              "tstop": 1000, "v_init": -65 }
         model.cell_regions = {"vm_soma": 0.0}
-        model.set_simulation_properties(h, setup_parameters)
+        model.set_simulation_properties(setup_parameters)
         #model.reset()
         #print ("size of rec_t is "+ str(model.cell.rec_t.size()) +
         #       " and its current value is "+ str(h._ref_t[0]))
