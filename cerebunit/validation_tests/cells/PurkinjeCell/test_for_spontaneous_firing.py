@@ -149,7 +149,6 @@ class SpontaneousFiringTest(sciunit.Test):
         else:
             ans = "The model " + model.name + " failed the " + self.__class__.__name__ + ". The mean firing rate of the model = " + str(a_prediction) + " and the validation data is " + str(observation)
         print(ans)
-        model.reset_exit()
         return score
         #computed_scores = {}
         #for cell_region in model.cell_regions:
