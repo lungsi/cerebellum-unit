@@ -18,6 +18,8 @@ from cerebunit.file_manager import get_folder_path_and_name as gfpan
 from cerebunit.score_manager import BinaryScore
 from cerebunit.capabilities.cells.response import ProducesSpikeTrain
 
+from models.simulation_manager import run_model
+
 
 class SpontaneousFiringTest(sciunit.Test):
     '''
@@ -49,34 +51,13 @@ class SpontaneousFiringTest(sciunit.Test):
         #model.reset()
         #
         print("generate prediction...")
-        print ("size of rec_t is "+ str(model.cell.rec_t.size()) +
-               " and its current value is "+ str(h._ref_t[0]))
-        print ("size of vm_soma is "+ str(model.cell.vm_soma.size()) +
-               " and its current value is "+ str(model.cell.soma(0.5)._ref_v[0]))
-        print ("size of vm_NOR3 is "+ str(model.cell.vm_NOR3.size()) +
-               " and its current value is "+ str(model.cell.axonNOR3(0.5)._ref_v[0]))
-        print(h.t, h.dt, h.tstop, h.v_init)
-        #
         setup_parameters = { "dt": 0.025,   "celsius": 37,
                              "tstop": 1000, "v_init": -65 }
         model.cell_regions = {"vm_soma": 0.0}
-        model.set_simulation_properties(setup_parameters)
-        #model.reset()
-        #print ("size of rec_t is "+ str(model.cell.rec_t.size()) +
-        #       " and its current value is "+ str(h._ref_t[0]))
-        #print ("size of vm_soma is "+ str(model.cell.vm_soma.size()) +
-        #       " and its current value is "+ str(model.cell.soma(0.5)._ref_v[0]))
-        #print ("size of vm_NOR3 is "+ str(model.cell.vm_NOR3.size()) +
-        #       " and its current value is "+ str(model.cell.axonNOR3(0.5)._ref_v[0]))
-        model.produce_spike_train()
-        print ("size of rec_t is "+ str(model.cell.rec_t.size()) +
-               " and its current value is "+ str(h._ref_t[0]))
-        print ("size of vm_soma is "+ str(model.cell.vm_soma.size()) +
-               " and its current value is "+ str(model.cell.soma(0.5)._ref_v[0]))
-        print ("size of vm_NOR3 is "+ str(model.cell.vm_NOR3.size()) +
-               " and its current value is "+ str(model.cell.axonNOR3(0.5)._ref_v[0]))
-        print(h.t, h.dt, h.tstop, h.v_init)
+        #model.set_simulation_properties(setup_parameters)
+        #model.produce_spike_train()
         #self.process_prediction(model)
+        run_model( model, runtime_parameters=setup_properties )
         return model
 
     def process_prediction(self, model):
