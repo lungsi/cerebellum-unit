@@ -57,7 +57,7 @@ class SpontaneousFiringTest(sciunit.Test):
         #model.set_simulation_properties(setup_parameters)
         #model.produce_spike_train()
         #self.process_prediction(model)
-        run_model( model, runtime_parameters=setup_properties )
+        run_model( model, runtime_parameters=setup_parameters )
         return model
 
     def process_prediction(self, model):
