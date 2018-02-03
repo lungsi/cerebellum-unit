@@ -1,4 +1,4 @@
-![Alt CerebUnit](cerebunit.png?raw=true "Title")
+![Alt CerebUnit](cerebunit.png?raw=true "Title"){: .center-image, height="50px", width="100px"}
 # cerebellum-unit
 Package for running validation test on cerebellum models.
 
