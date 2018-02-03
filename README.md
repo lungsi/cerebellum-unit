@@ -1,5 +1,5 @@
-![Alt CerebUnit](cerebunit.png?raw=true "Title")
-<!-- <div><img data-src="cerebunit.png" alt="CerebUnit" height="23%" width="15%" align="center"></div> -->
+<!-- ![Alt CerebUnit](cerebunit.png?raw=true "Title") -->
+<div><img data-src="https://raw.githubusercontent.com/lungsi/cerebellum-unit/master/cerebunit.png" alt="CerebUnit" height="23%" width="15%" align="center"></div>
 
 # cerebellum-unit
 Package for running validation test on cerebellum models.
