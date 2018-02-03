@@ -1,3 +1,4 @@
+![Alt CerebUnit](cerebunit.png?raw=true "Title")
 # cerebellum-unit
 Package for running validation test on cerebellum models.
 
