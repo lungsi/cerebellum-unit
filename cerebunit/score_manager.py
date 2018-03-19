@@ -31,6 +31,7 @@ class BinaryScore(sciunit.Score):
         # mesurement is in dictionary form whose value has
         # magnitude and python quantity
         # default epsilon = 10**(-3)
+        self.prediction = prediction
         if len(measurement.keys()) > 1:
             for key in measurement:
                 if key=="error":
@@ -83,8 +84,10 @@ class BinaryScore(sciunit.Score):
                         self.score = 0
         return self.score
 
-    _description = ( "The BinaryScore gives a score of 0 or 1 based on the comparison between prediction vs. measurement. "
-                   + "The prediction is a python quantities, i.e, it is in the form of array(x.x) * <some_unit>. "
+    _description = ( "The BinaryScore gives a score of 0 or 1 based on the comparison between prediction vs. measurement, with "
+                   + "\n 0: Fail"
+                   + "\n 1: Pass"
+                   + "\n\nDetails: The prediction is a python quantities, i.e, it is in the form of array(x.x) * <some_unit>. "
                    + "The measurement is also a python quantity, but in dictionary form. "
                    + "If the measurement has only 1-key, its value is the one that is the reference. "
                    + "The predicted value is then compared against the measurement with margin of error given by a default epsilon value. "
