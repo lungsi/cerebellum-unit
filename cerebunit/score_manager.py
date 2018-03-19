@@ -30,8 +30,7 @@ class BinaryScore(sciunit.Score):
     def compute(self, measurement, prediction, epsilon=10**(-3)):
         # mesurement is in dictionary form whose value has
         # magnitude and python quantity
-        # default epsilon = 10**(-3)
-        self.prediction = prediction
+        # default epsilon = 10**(-3)        
         if len(measurement.keys()) > 1:
             for key in measurement:
                 if key=="error":
@@ -92,7 +91,7 @@ class BinaryScore(sciunit.Score):
                    + "If the measurement has only 1-key, its value is the one that is the reference. "
                    + "The predicted value is then compared against the measurement with margin of error given by a default epsilon value. "
                    + "Therefore, BinaryScore checks that the predicted value is inside the interval. "
-                   + "If it is not it, a score-0 is given. "
+                   + "If it is not, a score-0 is given. "
                    + "If the measurement has an addition error-key its value is the epsilon.")
 
     @property
