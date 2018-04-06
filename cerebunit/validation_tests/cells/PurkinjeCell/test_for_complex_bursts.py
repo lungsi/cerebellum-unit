@@ -138,4 +138,10 @@ class ComplexBurstingTest(sciunit.Test):
         print ans
         return score
 
-
+    def bind_score(self, score, model, observation, prediction):
+        score.description = "The spontaneous firing test defined by the mean firing rate of the model = " + str(prediction) + " compared against the observed experimental data " + str(observation) + " whose " + str(score)
+        if score.score==1:
+            ans = "The model " + model.name + " passed the " + self.__class__.__name__ + ". The mean firing rate of the model = " + str(prediction) + " and the validation data is " + str(observation)
+        else:
+            ans = "The model " + model.name + " failed the " + self.__class__.__name__ + ". The mean firing rate of the model = " + str(prediction) + " and the validation data is " + str(observation)
+        print(ans)
