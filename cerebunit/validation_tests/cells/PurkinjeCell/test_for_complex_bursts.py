@@ -55,7 +55,9 @@ class ComplexBurstingTest(sciunit.Test):
         #
         model.produce_spike_train()
         #self.process_prediction(model)
-        return model
+        #return model
+        prediction = self.process_prediction(model)
+        return prediction
 #
 #
     def get_isi_for_current(self, model):
@@ -114,7 +116,7 @@ class ComplexBurstingTest(sciunit.Test):
         pass
 #
 #
-    def compute_score(self, observation, model, verbose=False):
+    def compute_score(self, observation, prediction, verbose=False):
         '''
         This function like generate_pediction is called automatically
         by sciunit which SpontaneousFiringTest is a child of.
@@ -126,9 +128,8 @@ class ComplexBurstingTest(sciunit.Test):
         the experimental_data to get the binary score; 0 if the
         prediction correspond with experiment, else 1.
         '''
-        a_prediction = self.process_prediction(model)
         x = BinaryScore.compute( observation,
-                                 a_prediction  )
+                                 prediction  )
         score = BinaryScore(x)
         score.description = "The complex bursting test is defined by checking if the coefficient of variation of the model = " + str(a_prediction) + " is " + str(observation) + " whose " + str(score)
         if score.score==1:
