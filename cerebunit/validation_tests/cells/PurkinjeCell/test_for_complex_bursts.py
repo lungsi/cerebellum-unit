@@ -110,6 +110,10 @@ class ComplexBurstingTest(sciunit.Test):
         return coeff_variation.item()
 #
 #
+    def validate_observation(self, observation, first_try=True):
+        pass
+#
+#
     def compute_score(self, observation, model, verbose=False):
         '''
         This function like generate_pediction is called automatically
