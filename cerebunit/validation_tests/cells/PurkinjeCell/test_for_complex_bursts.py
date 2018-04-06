@@ -113,7 +113,30 @@ class ComplexBurstingTest(sciunit.Test):
 #
 #
     def validate_observation(self, observation, first_try=True):
-        pass
+        '''
+        This function is called automatically by sciunit.
+        This checks if the experimental_data is of some desired
+        form or magnitude.
+        Not exactly this function but a version of this is already
+        performed by the ValidationTestLibrary.get_validation_test
+        '''
+        if "mean" not in observation:
+            raise sciunit.ObservationError
+        if "error" in observation:
+            pass
+        elif "standard error" in observation and "n" in observation:
+            # calculate standard deviation from standard error and number of observations
+            self.observation = {
+                "mean": observation["mean"],
+                "error": observation["standard error"] * sqrt(observation["n"])
+            }
+        else:
+            raise sciunit.ObservationError
+        if "units" in observation:
+            self.observation["mean"] = pq.Quantity(self.observation["mean"],
+                                                   units=observation["units"])
+            self.observation["error"] = pq.Quantity(self.observation["error"],
+                                                    units=observation["units"])
 #
 #
     def compute_score(self, observation, prediction, verbose=False):
